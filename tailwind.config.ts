@@ -8,6 +8,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        "3xs": "0.3rem",
+      },
+      screens: {
+        "3xs": "170px",
+        xs: "480px",
+        "3xl": "1600px",
+      },
+      fontFamily: {
+        "roboto-condensed": ["Roboto Condensed", "sans-serif"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
