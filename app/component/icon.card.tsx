@@ -6,17 +6,12 @@ export interface CardIconData extends CardData {
   number: number;
 }
 
-export const IconCard = ({
-  title,
-  content,
-  subtitle,
-  number,
-}: CardIconData) => {
+export const IconCard = ({ title, subtitle, number }: CardIconData) => {
   return (
     <div
       className={`rounded-3xl border-1 max-h-full w-fit border-gray-600 px-3 drop-shadow-md `}
     >
-      <div className="font-semibold 3xs:text-sm text-xs">{title}</div>
+      <div className="font-semibold 3xs:text-lg text-xs">{title}</div>
       <div className="font-normal 3xs:text-xs text-3xs text-orange-400">
         {subtitle}
       </div>
@@ -36,7 +31,6 @@ export const IconCard = ({
           </p>
         </div>
         <div className="bottom-0 static text-xs px-6 py-4"> Read More </div>
-        {content}
       </div>
     </div>
   );
