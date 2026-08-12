@@ -1,0 +1,144 @@
+"use client";
+
+import { TEST_LIST, type TestStatus } from "../lib/tests";
+
+type Props = {
+  onCreate: () => void;
+};
+
+function statusClass(status: TestStatus) {
+  if (status === "Published") return "badge-status badge-published";
+  if (status === "Draft") return "badge-status badge-draft";
+  return "badge-status badge-archived";
+}
+
+export function LmsTestList({ onCreate }: Props) {
+  return (
+    <>
+      <div className="page-head">
+        <div>
+          <h1 className="page-title">LMS</h1>
+          <p className="page-sub">Manage tests and assessment materials</p>
+        </div>
+
+        <button type="button" className="btn-brand" onClick={onCreate}>
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Create New Test
+        </button>
+      </div>
+
+      <section className="panel">
+        <div className="panel-head">
+          <h2 className="panel-title">Test List</h2>
+          <div className="table-search">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.2-3.2" />
+            </svg>
+            <input type="text" placeholder="Search test..." />
+          </div>
+        </div>
+
+        <div className="table-responsive">
+          <table className="table align-middle mb-0 data-table">
+            <thead>
+              <tr>
+                <th style={{ width: 60 }}>No</th>
+                <th>Test Code</th>
+                <th>Test Title</th>
+                <th>Category</th>
+                <th className="text-center">Questions</th>
+                <th className="text-center">Duration</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th className="text-center" style={{ width: 120 }}>
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {TEST_LIST.map((row, index) => (
+                <tr key={row.id}>
+                  <td className="text-secondary">{index + 1}</td>
+                  <td className="fw-semibold">{row.code}</td>
+                  <td>{row.title}</td>
+                  <td>{row.category}</td>
+                  <td className="text-center">{row.questions}</td>
+                  <td className="text-center">{row.duration} min</td>
+                  <td>
+                    <span className={statusClass(row.status)}>{row.status}</span>
+                  </td>
+                  <td className="text-secondary">{row.createdAt}</td>
+                  <td>
+                    <div className="d-flex justify-content-center gap-2">
+                      <button type="button" className="icon-btn" title="View">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+                          <circle cx="12" cy="12" r="2.8" />
+                        </svg>
+                      </button>
+                      <button type="button" className="icon-btn" title="Edit">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M4 20h4L19 9l-4-4L4 16v4Z" />
+                          <path d="m14.5 5.5 4 4" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        className="icon-btn icon-btn-danger"
+                        title="Delete"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M4 7h16M9.5 7V5h5v2M6.5 7l1 13h9l1-13" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="panel-foot">
+          <span className="text-secondary">
+            Showing 1&ndash;{TEST_LIST.length} of {TEST_LIST.length} tests
+          </span>
+          <nav>
+            <ul className="pagination pagination-sm mb-0">
+              <li className="page-item disabled">
+                <span className="page-link">Prev</span>
+              </li>
+              <li className="page-item active">
+                <span className="page-link">1</span>
+              </li>
+              <li className="page-item disabled">
+                <span className="page-link">Next</span>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+    </>
+  );
+}
