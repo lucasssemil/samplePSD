@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Field } from "./FormField";
-import { Modal } from "./Modal";
-import { formatIsoDate } from "../lib/employees";
+import { Field } from "../../components/FormField";
+import { Modal } from "../../components/Modal";
+import { formatIsoDate } from "../../lib/employees";
 import {
   resignCategoryClass,
   resignStatusClass,
   type ResignLetter,
-} from "../lib/resignations";
+} from "../../lib/resignations";
 
 export type ApprovalPayload = {
   exitInterviewDate: string;

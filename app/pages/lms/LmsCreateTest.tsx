@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Field } from "./FormField";
-import { TEST_CATEGORIES } from "../lib/tests";
+import { FileDrop } from "../../components/FileDrop";
+import { Field } from "../../components/FormField";
+import { TEST_CATEGORIES } from "../../lib/tests";
 
 type Props = {
   onBack: () => void;
@@ -15,6 +16,8 @@ type Question = {
   text: string;
   options: string[];
   answer: number | null;
+  /** Disabled questions stay in the draft but are left out of the test. */
+  enabled: boolean;
 };
 
 const LETTERS = ["A", "B", "C", "D"];
@@ -27,6 +30,7 @@ function newQuestion(): Question {
     text: "",
     options: ["", "", "", ""],
     answer: null,
+    enabled: true,
   };
 }
 
@@ -43,6 +47,7 @@ const PHASE_HINT: Record<Phase, string> = {
 export function LmsCreateTest({ onBack }: Props) {
   const [phase, setPhase] = useState<Phase>("pre");
   const [videoLink, setVideoLink] = useState("");
+  const [material, setMaterial] = useState<File | null>(null);
   const [questions, setQuestions] = useState<Record<Phase, Question[]>>({
     pre: [newQuestion()],
     post: [newQuestion()],
@@ -73,8 +78,10 @@ export function LmsCreateTest({ onBack }: Props) {
     }));
   }
 
+  // Only enabled questions with text count toward the test.
   const filled = (list: Question[]) =>
-    list.filter((question) => question.text.trim() !== "").length;
+    list.filter((question) => question.enabled && question.text.trim() !== "")
+      .length;
 
   const preFilled = filled(questions.pre);
   const postFilled = filled(questions.post);
@@ -173,6 +180,14 @@ export function LmsCreateTest({ onBack }: Props) {
               />
             </Field>
 
+            <Field
+              label="File Materi"
+              col="col-12"
+              hint="Opsional — lampiran yang bisa diunduh karyawan di halaman pelatihan."
+            >
+              <FileDrop file={material} onPick={setMaterial} />
+            </Field>
+
             <Field label="Deskripsi" col="col-12">
               <textarea
                 className="form-control"
@@ -236,12 +251,38 @@ export function LmsCreateTest({ onBack }: Props) {
           <p className="field-hint mt-0 mb-3">{PHASE_HINT[phase]}</p>
 
           {active.map((question, index) => (
-            <div className="question-card mb-3" key={question.id}>
+            <div
+              className={`question-card mb-3${
+                question.enabled ? "" : " question-card-off"
+              }`}
+              key={question.id}
+            >
               <div className="d-flex justify-content-between align-items-start mb-3 gap-2">
                 <span className="question-index">
                   {PHASE_LABEL[phase]} &middot; Soal {index + 1}
                 </span>
                 <div className="d-flex align-items-center gap-2">
+                  <div className="form-check form-switch question-switch">
+                    <input
+                      id={`q-${phase}-${question.id}-enabled`}
+                      type="checkbox"
+                      role="switch"
+                      className="form-check-input mt-0"
+                      checked={question.enabled}
+                      onChange={(event) =>
+                        patchQuestion(question.id, {
+                          enabled: event.target.checked,
+                        })
+                      }
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor={`q-${phase}-${question.id}-enabled`}
+                    >
+                      {question.enabled ? "Aktif" : "Nonaktif"}
+                    </label>
+                  </div>
+
                   <span className="badge-status badge-draft">
                     Pilihan Ganda
                   </span>
@@ -272,6 +313,7 @@ export function LmsCreateTest({ onBack }: Props) {
                 type="text"
                 className="form-control mb-3"
                 placeholder="Tulis pertanyaannya di sini..."
+                disabled={!question.enabled}
                 value={question.text}
                 onChange={(event) =>
                   patchQuestion(question.id, { text: event.target.value })
@@ -287,6 +329,7 @@ export function LmsCreateTest({ onBack }: Props) {
                         name={`${phase}-${question.id}-answer`}
                         className="form-check-input mt-0"
                         aria-label={`Jawaban benar ${letter}`}
+                        disabled={!question.enabled}
                         checked={question.answer === optionIndex}
                         onChange={() =>
                           patchQuestion(question.id, { answer: optionIndex })
@@ -297,6 +340,7 @@ export function LmsCreateTest({ onBack }: Props) {
                         type="text"
                         className="form-control form-control-sm"
                         placeholder={`Opsi ${letter}`}
+                        disabled={!question.enabled}
                         value={question.options[optionIndex]}
                         onChange={(event) =>
                           patchQuestion(question.id, {

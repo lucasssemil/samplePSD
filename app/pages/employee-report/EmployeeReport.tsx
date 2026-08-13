@@ -1,19 +1,19 @@
 "use client";
 
 import { useMemo } from "react";
-import { PieChart, type Slice } from "./PieChart";
+import { PieChart, type Slice } from "../../components/PieChart";
 import {
   KPI_BANDS,
   kpiBand,
   kpiBandClass,
   type EmployeeRow,
   type KpiBand,
-} from "../lib/employees";
+} from "../../lib/employees";
 import {
   SURVEY_CATEGORIES,
   SURVEY_ENTRIES,
   surveyCategoryClass,
-} from "../lib/surveys";
+} from "../../lib/surveys";
 
 type Props = {
   employees: EmployeeRow[];

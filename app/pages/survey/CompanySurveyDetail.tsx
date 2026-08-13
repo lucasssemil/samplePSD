@@ -1,13 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { EmployeeRow } from "../lib/employees";
+import type { EmployeeRow } from "../../lib/employees";
 import {
   SURVEY_CATEGORIES,
   surveyCategoryClass,
   surveysOf,
   type SurveyCategory,
-} from "../lib/surveys";
+} from "../../lib/surveys";
 
 type Props = {
   employee: EmployeeRow | undefined;

@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Field } from "./FormField";
-import { Modal } from "./Modal";
+import { Field } from "../../components/FormField";
+import { Modal } from "../../components/Modal";
 import {
   ASSESSMENT_CATEGORIES,
   formatMonth,
   overallScore,
   type AssessmentCategoryKey,
   type AssessmentScores,
-} from "../lib/assessments";
+} from "../../lib/assessments";
 
 export type AssessmentSubmission = {
   month: string;

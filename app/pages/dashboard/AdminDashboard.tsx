@@ -1,9 +1,9 @@
 "use client";
 
-import { Icon } from "./icons";
-import { kpiBand, type EmployeeRow, type KpiBand } from "../lib/employees";
-import { ROLE_SUBTITLE, type Role } from "../lib/menu";
-import { SURVEY_ENTRIES } from "../lib/surveys";
+import { Icon } from "../../components/icons";
+import { kpiBand, type EmployeeRow, type KpiBand } from "../../lib/employees";
+import { ROLE_SUBTITLE, type Role } from "../../lib/menu";
+import { SURVEY_ENTRIES } from "../../lib/surveys";
 
 type Props = {
   role: Role;

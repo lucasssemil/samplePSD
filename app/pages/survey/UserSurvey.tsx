@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Field } from "./FormField";
+import { Field } from "../../components/FormField";
 
 import {
   SURVEY_CATEGORIES,
@@ -9,7 +9,7 @@ import {
   surveysOf,
   type SurveyCategory,
   type SurveyEntry,
-} from "../lib/surveys";
+} from "../../lib/surveys";
 
 const TODAY = "13 Agu 2026";
 

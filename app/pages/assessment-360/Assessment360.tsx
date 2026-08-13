@@ -5,7 +5,7 @@ import {
   AssessmentFormModal,
   type AssessmentSubmission,
 } from "./AssessmentFormModal";
-import { LineChart, type Point } from "./LineChart";
+import { LineChart, type Point } from "../../components/LineChart";
 import {
   ASSESSMENT_CATEGORIES,
   formatMonth,
@@ -13,9 +13,9 @@ import {
   reviewsOf,
   shortMonth,
   type AssessmentEntry,
-} from "../lib/assessments";
-import { kpiBand, kpiBandClass, type EmployeeRow } from "../lib/employees";
-import { minimumFor, type KpiMinimum } from "../lib/kpiMinimum";
+} from "../../lib/assessments";
+import { kpiBand, kpiBandClass, type EmployeeRow } from "../../lib/employees";
+import { minimumFor, type KpiMinimum } from "../../lib/kpiMinimum";
 
 const TODAY = "13 Agu 2026";
 

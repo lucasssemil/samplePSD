@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AssignTestModal } from "./AssignTestModal";
-import { completionOf, type EmployeeRow } from "../lib/employees";
+import { completionOf, type EmployeeRow } from "../../lib/employees";
 
 type Props = {
   employees: EmployeeRow[];

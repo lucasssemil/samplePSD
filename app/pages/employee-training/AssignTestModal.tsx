@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckField, Field, TestSelect } from "./FormField";
-import { Modal } from "./Modal";
-import { TEST_LIST } from "../lib/tests";
+import { CheckField, Field, TestSelect } from "../../components/FormField";
+import { Modal } from "../../components/Modal";
+import { TEST_LIST } from "../../lib/tests";
 
 export type AssignPayload = {
   testId: string;

@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Icon } from "./icons";
+import { Icon } from "../../components/icons";
 import { ResignFormModal, type ResignSubmission } from "./ResignFormModal";
 import {
   finishedTrainings,
   formatIsoDate,
   levelOf,
   type EmployeeRow,
-} from "../lib/employees";
-import { ROLE_SUBTITLE, type Role } from "../lib/menu";
+} from "../../lib/employees";
+import { ROLE_SUBTITLE, type Role } from "../../lib/menu";
 
 type Props = {
   role: Role;

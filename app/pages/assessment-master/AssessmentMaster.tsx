@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { KpiMinimumModal } from "./KpiMinimumModal";
-import { kpiBand, kpiBandClass, type EmployeeRow } from "../lib/employees";
-import type { KpiMinimum } from "../lib/kpiMinimum";
+import { kpiBand, kpiBandClass, type EmployeeRow } from "../../lib/employees";
+import type { KpiMinimum } from "../../lib/kpiMinimum";
 
 type Props = {
   employees: EmployeeRow[];

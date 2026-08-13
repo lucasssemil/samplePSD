@@ -7,9 +7,14 @@ import {
   trainingState,
   trainingStateClass,
   type AssignedTest,
-} from "../lib/employees";
-import { pickQuestions, type Question } from "../lib/questions";
-import { TEST_LIST } from "../lib/tests";
+} from "../../lib/employees";
+import {
+  MATERIAL_FILES,
+  fileKind,
+  formatFileSize,
+} from "../../lib/materials";
+import { pickQuestions, type Question } from "../../lib/questions";
+import { TEST_LIST } from "../../lib/tests";
 
 type Props = {
   item: AssignedTest;
@@ -32,6 +37,9 @@ export function UserTrainingDetail({ item, onBack }: Props) {
 
   const test = TEST_LIST.find((row) => row.id === item.testId);
   const duration = test?.duration ?? 30;
+  const attachments = MATERIAL_FILES.filter(
+    (file) => file.testId === item.testId
+  );
   const state = trainingState(item);
 
   function start(phase: Phase) {
@@ -125,6 +133,57 @@ export function UserTrainingDetail({ item, onBack }: Props) {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
+              </div>
+
+              <div className="attachment-row">
+                <span className="attachment-label">Lampiran materi</span>
+
+                {attachments.length > 0 ? (
+                  attachments.map((file) => (
+                    <button
+                      type="button"
+                      className="btn-ghost btn-ghost-sm attachment-btn"
+                      key={file.id}
+                    >
+                      <svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.9"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 4v11M8 11l4 4 4-4" />
+                        <path d="M4 18.5h16" />
+                      </svg>
+                      {file.title}
+                      <span className="attachment-meta">
+                        {fileKind(file.name)} &middot; {formatFileSize(file.size)}
+                      </span>
+                    </button>
+                  ))
+                ) : (
+                  <button type="button" className="btn-ghost btn-ghost-sm attachment-btn">
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.9"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 4v11M8 11l4 4 4-4" />
+                      <path d="M4 18.5h16" />
+                    </svg>
+                    Unduh Lampiran
+                  </button>
+                )}
               </div>
             </div>
           </section>

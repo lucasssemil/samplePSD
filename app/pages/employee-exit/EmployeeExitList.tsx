@@ -2,13 +2,13 @@
 
 import { useMemo, useState } from "react";
 import { ApproveResignModal, type ApprovalPayload } from "./ApproveResignModal";
-import { formatIsoDate, type EmployeeRow } from "../lib/employees";
+import { formatIsoDate, type EmployeeRow } from "../../lib/employees";
 import {
   categoryBreakdown,
   resignCategoryClass,
   resignStatusClass,
   type ResignLetter,
-} from "../lib/resignations";
+} from "../../lib/resignations";
 
 type Props = {
   employees: EmployeeRow[];

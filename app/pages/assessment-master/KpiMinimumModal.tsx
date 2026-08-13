@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Field } from "./FormField";
-import { Modal } from "./Modal";
-import type { KpiMinimum } from "../lib/kpiMinimum";
+import { Field } from "../../components/FormField";
+import { Modal } from "../../components/Modal";
+import type { KpiMinimum } from "../../lib/kpiMinimum";
 
 type Props = {
   open: boolean;

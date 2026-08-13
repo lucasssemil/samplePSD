@@ -6,7 +6,7 @@ import {
   trainingStateClass,
   type AssignedTest,
   type EmployeeRow,
-} from "../lib/employees";
+} from "../../lib/employees";
 
 type Props = {
   employee: EmployeeRow | undefined;

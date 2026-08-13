@@ -1,6 +1,6 @@
 "use client";
 
-import { TEST_LIST, totalQuestions, type TestStatus } from "../lib/tests";
+import { TEST_LIST, totalQuestions, type TestStatus } from "../../lib/tests";
 
 type Props = {
   onCreate: () => void;
@@ -160,6 +160,7 @@ export function LmsTestList({ onCreate }: Props) {
           </nav>
         </div>
       </section>
+
     </>
   );
 }

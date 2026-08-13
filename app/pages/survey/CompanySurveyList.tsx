@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { EmployeeRow } from "../lib/employees";
-import { surveysOf } from "../lib/surveys";
+import type { EmployeeRow } from "../../lib/employees";
+import { surveysOf } from "../../lib/surveys";
 
 type Props = {
   employees: EmployeeRow[];

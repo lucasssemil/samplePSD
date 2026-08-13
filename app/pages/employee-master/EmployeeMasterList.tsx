@@ -6,7 +6,7 @@ import {
   finishedTrainings,
   levelOf,
   type EmployeeRow,
-} from "../lib/employees";
+} from "../../lib/employees";
 
 type Props = {
   employees: EmployeeRow[];

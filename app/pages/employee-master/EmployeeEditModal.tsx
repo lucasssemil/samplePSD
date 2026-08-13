@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Field } from "./FormField";
-import { Modal } from "./Modal";
+import { Field } from "../../components/FormField";
+import { Modal } from "../../components/Modal";
 import {
   DEPARTMENTS,
   OUTLETS,
   POSITIONS,
   STAFF_LEVELS,
   type EmployeeRow,
-} from "../lib/employees";
+} from "../../lib/employees";
 
 /** The editable slice of an employee profile — the training data is untouched. */
 export type EmployeeProfile = Pick<
