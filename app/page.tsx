@@ -16,6 +16,7 @@ import { EmployeeTrainingList } from "./pages/employee-training/EmployeeTraining
 import { LmsCreateTest } from "./pages/lms/LmsCreateTest";
 import { LmsTestList } from "./pages/lms/LmsTestList";
 import { Assessment360, buildReview } from "./pages/assessment-360/Assessment360";
+import { Footer } from "./components/Footer";
 import { Sidebar } from "./components/Sidebar";
 import { UserDashboard } from "./pages/dashboard/UserDashboard";
 import type { ResignSubmission } from "./pages/dashboard/ResignFormModal";
@@ -196,6 +197,8 @@ export default function Home() {
           <UserDashboard
             role={role}
             employee={currentUser}
+            team={role === "supervisor" ? scopedEmployees : []}
+            reviews={reviews}
             onOpen={selectMenu}
             onSubmitResign={submitResign}
           />
@@ -323,7 +326,17 @@ export default function Home() {
         role={role}
         onChangeRole={changeRole}
         onToggleSidebar={() => setSidebarOpen((v) => !v)}
+        onHome={() => selectMenu("dashboard")}
       />
+
+      {sidebarOpen ? (
+        <button
+          type="button"
+          className="sidebar-backdrop"
+          aria-label="Tutup menu"
+          onClick={() => setSidebarOpen(false)}
+        />
+      ) : null}
 
       <Sidebar
         role={role}
@@ -332,7 +345,10 @@ export default function Home() {
         open={sidebarOpen}
       />
 
-      <main className="content">{renderContent()}</main>
+      <main className="content">
+        {renderContent()}
+        <Footer />
+      </main>
     </div>
   );
 }

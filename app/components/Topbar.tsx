@@ -9,6 +9,7 @@ type Props = {
   role: Role;
   onChangeRole: (role: Role) => void;
   onToggleSidebar: () => void;
+  onHome: () => void;
 };
 
 const ROLE_NAME: Record<Role, string> = {
@@ -17,7 +18,12 @@ const ROLE_NAME: Record<Role, string> = {
   admin: "Admin General Affairs",
 };
 
-export function Topbar({ role, onChangeRole, onToggleSidebar }: Props) {
+export function Topbar({
+  role,
+  onChangeRole,
+  onToggleSidebar,
+  onHome,
+}: Props) {
   return (
     <header className="topbar">
       <div className="d-flex align-items-center gap-3">
@@ -31,7 +37,12 @@ export function Topbar({ role, onChangeRole, onToggleSidebar }: Props) {
             <path d="M4 7h16M4 12h16M4 17h16" />
           </svg>
         </button>
-        <div>
+        <button
+          type="button"
+          className="brand-home"
+          onClick={onHome}
+          aria-label="Ke dashboard"
+        >
           <Image
             src="/logo.png"
             alt="Bon Ami"
@@ -40,8 +51,8 @@ export function Topbar({ role, onChangeRole, onToggleSidebar }: Props) {
             priority
             className="brand-logo"
           />
-          <div className="brand-sub">Sistem Manajemen SDM</div>
-        </div>
+          <span className="brand-sub">Sistem Manajemen SDM</span>
+        </button>
       </div>
 
       <div className="d-flex align-items-center gap-3">

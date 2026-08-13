@@ -4,9 +4,15 @@ import { useState } from "react";
 import { Icon } from "../../components/icons";
 import { ResignFormModal, type ResignSubmission } from "./ResignFormModal";
 import {
+  CURRENT_MONTH,
+  formatMonth,
+  type AssessmentEntry,
+} from "../../lib/assessments";
+import {
   finishedTrainings,
   formatIsoDate,
   levelOf,
+  trainingState,
   type EmployeeRow,
 } from "../../lib/employees";
 import { ROLE_SUBTITLE, type Role } from "../../lib/menu";
@@ -14,6 +20,9 @@ import { ROLE_SUBTITLE, type Role } from "../../lib/menu";
 type Props = {
   role: Role;
   employee: EmployeeRow | undefined;
+  /** Employees this account supervises — empty for a plain employee. */
+  team: EmployeeRow[];
+  reviews: AssessmentEntry[];
   onOpen: (menuId: string) => void;
   onSubmitResign: (submission: ResignSubmission) => void;
 };
@@ -37,6 +46,8 @@ const SUPERVISOR_SHORTCUTS = [
 export function UserDashboard({
   role,
   employee,
+  team,
+  reviews,
   onOpen,
   onSubmitResign,
 }: Props) {
@@ -51,6 +62,19 @@ export function UserDashboard({
   const progress = level.next
     ? Math.min(100, Math.round(((finished - level.min) / span) * 100))
     : 100;
+
+  // Team members who still have a test to finish, and those with no 360
+  // review for the current month yet.
+  const testPending = team.filter((member) =>
+    member.assigned.some((item) => trainingState(item) !== "Selesai")
+  );
+  const reviewPending = team.filter(
+    (member) =>
+      !reviews.some(
+        (entry) =>
+          entry.employeeId === member.id && entry.month === CURRENT_MONTH
+      )
+  );
 
   function submitResign(submission: ResignSubmission) {
     setResign(submission);
@@ -88,6 +112,71 @@ export function UserDashboard({
           </div>
         </div>
       </div>
+
+      {role === "supervisor" ? (
+        <>
+          {reviewPending.length > 0 ? (
+            <div className="alert-card mb-4">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 3.8 21 19.5H3L12 3.8Z" />
+                <path d="M12 10v4M12 17h.01" />
+              </svg>
+              <div className="alert-text">
+                <strong>
+                  {reviewPending.length} karyawan belum diisi 360 Assessment
+                </strong>{" "}
+                untuk bulan {formatMonth(CURRENT_MONTH)}:{" "}
+                {reviewPending.map((member) => member.name).join(", ")}.
+              </div>
+              <button
+                type="button"
+                className="btn-brand btn-brand-sm"
+                onClick={() => onOpen("assessment-360")}
+              >
+                Isi Sekarang
+              </button>
+            </div>
+          ) : null}
+
+          <div className="row g-3 mb-4">
+            <div className="col-md-4">
+              <div className="stat-card h-100">
+                <span className="stat-label">Karyawan Disupervisi</span>
+                <span className="stat-value">{team.length}</span>
+                <span className="field-hint mt-0">Anggota tim Anda</span>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="stat-card h-100">
+                <span className="stat-label">Belum Selesai Tes</span>
+                <span className="stat-value">{testPending.length}</span>
+                <span className="field-hint mt-0">
+                  Karyawan yang masih punya tes berjalan
+                </span>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="stat-card h-100">
+                <span className="stat-label">Belum Direview</span>
+                <span className="stat-value">{reviewPending.length}</span>
+                <span className="field-hint mt-0">
+                  Belum ada 360 Assessment bulan ini
+                </span>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
 
       <section className="panel mb-4">
         <div className="panel-head">

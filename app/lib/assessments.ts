@@ -161,6 +161,9 @@ export const REVIEW_HISTORY: AssessmentEntry[] = [
   },
 ];
 
+/** The month the mockup runs in — the review reminder checks against it. */
+export const CURRENT_MONTH = "2026-08";
+
 const MONTH_LABELS = [
   "Jan",
   "Feb",

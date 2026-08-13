@@ -125,6 +125,14 @@ body {
   color: #fff;
 }
 
+.brand-home {
+  display: block;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+}
+
 /* ---------- Sidebar ---------- */
 
 .sidebar {
@@ -1082,6 +1090,36 @@ body {
   text-decoration: underline;
 }
 
+.sidebar-backdrop {
+  display: none;
+}
+
+/* ---------- Alerts ---------- */
+
+.alert-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  border: 1px solid #f1d7a8;
+  border-left: 4px solid #fab219;
+  border-radius: 12px;
+  background: #fdf6e7;
+  padding: 14px 18px;
+  color: #7a5a12;
+}
+
+.alert-card svg {
+  flex: 0 0 auto;
+  color: #b5820f;
+}
+
+.alert-text {
+  flex: 1 1 260px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
 /* ---------- Training level ---------- */
 
 .level-row {
@@ -1383,6 +1421,32 @@ body {
   color: #a52025;
 }
 
+/* ---------- Footer ---------- */
+
+.app-footer {
+  margin-top: 32px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.app-footer-note {
+  display: flex;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.app-footer-mark {
+  color: var(--brand-red);
+  font-weight: 700;
+}
+
+.app-footer-en {
+  margin-top: 3px;
+  font-style: italic;
+}
+
 @media (max-width: 991.98px) {
   .sidebar {
     transform: translateX(-100%);
@@ -1395,5 +1459,16 @@ body {
 
   .content {
     margin-left: 0;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: var(--topbar-h) 0 0 0;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    background: rgba(47, 42, 38, 0.4);
+    z-index: 15;
   }
 }
