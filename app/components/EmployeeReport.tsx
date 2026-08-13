@@ -21,9 +21,9 @@ type Props = {
 
 /** Status palette — reserved for state, never reused as a series colour. */
 const BAND_COLOR: Record<KpiBand, string> = {
-  Green: "#0ca30c",
-  Yellow: "#fab219",
-  Red: "#d03b3b",
+  Hijau: "#0ca30c",
+  Kuning: "#fab219",
+  Merah: "#d03b3b",
 };
 
 function BandIcon({ band }: { band: KpiBand }) {
@@ -39,12 +39,12 @@ function BandIcon({ band }: { band: KpiBand }) {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {band === "Green" ? (
+      {band === "Hijau" ? (
         <>
           <circle cx="12" cy="12" r="9" />
           <path d="m8 12.5 2.7 2.7L16 9.8" />
         </>
-      ) : band === "Yellow" ? (
+      ) : band === "Kuning" ? (
         <>
           <path d="M12 3.8 21 19.5H3L12 3.8Z" />
           <path d="M12 10v4M12 17h.01" />
@@ -61,7 +61,7 @@ function BandIcon({ band }: { band: KpiBand }) {
 
 export function EmployeeReport({ employees }: Props) {
   const kpi = useMemo(() => {
-    const counts: Record<KpiBand, number> = { Green: 0, Yellow: 0, Red: 0 };
+    const counts: Record<KpiBand, number> = { Hijau: 0, Kuning: 0, Merah: 0 };
     for (const employee of employees) counts[kpiBand(employee.kpiScore)] += 1;
     return counts;
   }, [employees]);
@@ -79,10 +79,10 @@ export function EmployeeReport({ employees }: Props) {
   );
 
   const positive = SURVEY_ENTRIES.filter(
-    (entry) => entry.sentiment === "Positive"
+    (entry) => entry.sentiment === "Positif"
   );
   const negative = SURVEY_ENTRIES.filter(
-    (entry) => entry.sentiment === "Negative"
+    (entry) => entry.sentiment === "Negatif"
   );
 
   const categoryCounts = SURVEY_CATEGORIES.map((category) => ({
@@ -98,7 +98,7 @@ export function EmployeeReport({ employees }: Props) {
     tone: "positive" | "negative"
   ) {
     if (entries.length === 0) {
-      return <p className="empty-text mb-0">No survey in this group.</p>;
+      return <p className="empty-text mb-0">Belum ada survei di kelompok ini.</p>;
     }
     return (
       <ul className="sentiment-list">
@@ -106,7 +106,7 @@ export function EmployeeReport({ employees }: Props) {
           <li key={entry.id} className={`sentiment-item sentiment-${tone}`}>
             <div className="d-flex align-items-center gap-2 flex-wrap mb-1">
               <span className="sentiment-name">
-                {byName.get(entry.employeeId)?.name ?? "Unknown employee"}
+                {byName.get(entry.employeeId)?.name ?? "Karyawan tidak dikenal"}
               </span>
               <span className={surveyCategoryClass(entry.category)}>
                 {entry.category}
@@ -126,17 +126,17 @@ export function EmployeeReport({ employees }: Props) {
         <div>
           <h1 className="page-title">Employee Report</h1>
           <p className="page-sub">
-            KPI distribution and company survey summary
+            Sebaran KPI dan ringkasan survei perusahaan
           </p>
         </div>
       </div>
 
       <div className="row g-3 mb-4">
         {[
-          { label: "Employees", value: employees.length },
-          { label: "Survey Entries", value: SURVEY_ENTRIES.length },
-          { label: "Positive Survey", value: positive.length },
-          { label: "Negative Survey", value: negative.length },
+          { label: "Karyawan", value: employees.length },
+          { label: "Entri Survei", value: SURVEY_ENTRIES.length },
+          { label: "Survei Positif", value: positive.length },
+          { label: "Survei Negatif", value: negative.length },
         ].map((stat) => (
           <div className="col-6 col-lg-3" key={stat.label}>
             <div className="stat-card">
@@ -151,14 +151,14 @@ export function EmployeeReport({ employees }: Props) {
         <div className="col-lg-6">
           <section className="panel h-100">
             <div className="panel-head">
-              <h2 className="panel-title">KPI Score Distribution</h2>
+              <h2 className="panel-title">Sebaran Skor KPI</h2>
             </div>
             <div className="panel-body">
               <div className="chart-row">
                 <PieChart
                   slices={slices}
                   centerValue={employees.length}
-                  centerLabel="Employees"
+                  centerLabel="Karyawan"
                 />
 
                 <ul className="chart-legend">
@@ -191,10 +191,10 @@ export function EmployeeReport({ employees }: Props) {
         <div className="col-lg-6">
           <section className="panel h-100">
             <div className="panel-head">
-              <h2 className="panel-title">Survey Category</h2>
+              <h2 className="panel-title">Kategori Survei</h2>
               {topCategory ? (
                 <span className="text-secondary" style={{ fontSize: 13.5 }}>
-                  Most reported: <strong>{topCategory.category}</strong>
+                  Paling banyak: <strong>{topCategory.category}</strong>
                 </span>
               ) : null}
             </div>
@@ -220,7 +220,7 @@ export function EmployeeReport({ employees }: Props) {
                 ))}
               </ul>
               <p className="field-hint">
-                Number of survey entries submitted per category.
+                Jumlah entri survei yang masuk per kategori.
               </p>
             </div>
           </section>
@@ -229,9 +229,9 @@ export function EmployeeReport({ employees }: Props) {
 
       <section className="panel mb-4">
         <div className="panel-head">
-          <h2 className="panel-title">KPI Score per Employee</h2>
+          <h2 className="panel-title">Skor KPI per Karyawan</h2>
           <span className="text-secondary" style={{ fontSize: 13.5 }}>
-            The table behind the chart above
+            Tabel di balik grafik di atas
           </span>
         </div>
         <div className="table-responsive">
@@ -239,10 +239,10 @@ export function EmployeeReport({ employees }: Props) {
             <thead>
               <tr>
                 <th style={{ width: 60 }}>No</th>
-                <th>Employee Number</th>
-                <th>Name</th>
-                <th>Position</th>
-                <th className="text-center">KPI Score</th>
+                <th>Nomor Karyawan</th>
+                <th>Nama</th>
+                <th>Jabatan</th>
+                <th className="text-center">Skor KPI</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -276,9 +276,9 @@ export function EmployeeReport({ employees }: Props) {
         <div className="col-lg-6">
           <section className="panel h-100">
             <div className="panel-head">
-              <h2 className="panel-title">Positive Survey</h2>
+              <h2 className="panel-title">Survei Positif</h2>
               <span className="badge-status badge-published">
-                {positive.length} entries
+                {positive.length} entri
               </span>
             </div>
             <div className="panel-body">
@@ -290,9 +290,9 @@ export function EmployeeReport({ employees }: Props) {
         <div className="col-lg-6">
           <section className="panel h-100">
             <div className="panel-head">
-              <h2 className="panel-title">Negative Survey</h2>
+              <h2 className="panel-title">Survei Negatif</h2>
               <span className="badge-status badge-failed">
-                {negative.length} entries
+                {negative.length} entri
               </span>
             </div>
             <div className="panel-body">

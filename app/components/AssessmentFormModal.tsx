@@ -19,6 +19,7 @@ export type AssessmentSubmission = {
 
 type Props = {
   open: boolean;
+  subtitle: string;
   /** Months already submitted — one assessment per month. */
   takenMonths: string[];
   onClose: () => void;
@@ -41,6 +42,7 @@ function parse(value: string) {
 
 export function AssessmentFormModal({
   open,
+  subtitle,
   takenMonths,
   onClose,
   onSubmit,
@@ -93,18 +95,18 @@ export function AssessmentFormModal({
     <Modal
       open={open}
       size="lg"
-      title="Add Assessment"
-      subtitle="Score each category for the month the assessment was done"
+      title="Tambah Review Bulanan"
+      subtitle={subtitle}
       onClose={onClose}
       footer={
         <>
           {preview !== null ? (
             <span className="me-auto text-secondary" style={{ fontSize: 13.5 }}>
-              KPI score for this month: <strong>{preview}</strong>
+              Skor KPI bulan ini: <strong>{preview}</strong>
             </span>
           ) : null}
           <button type="button" className="btn-ghost" onClick={onClose}>
-            Cancel
+            Batal
           </button>
           <button
             type="button"
@@ -112,17 +114,17 @@ export function AssessmentFormModal({
             onClick={submit}
             disabled={!canSubmit}
           >
-            Add Assessment
+            Simpan Review
           </button>
         </>
       }
     >
       <div className="row g-3">
         <Field
-          label="Assessment Month"
+          label="Bulan Review"
           required
           col="col-md-6"
-          hint="The month the assessment was done."
+          hint="Bulan saat review dilakukan."
         >
           <input
             type="month"
@@ -135,14 +137,14 @@ export function AssessmentFormModal({
         {duplicate ? (
           <div className="col-12">
             <p className="field-error mb-0">
-              {formatMonth(month)} has already been submitted.
+              {formatMonth(month)} sudah pernah diinput.
             </p>
           </div>
         ) : null}
 
         <div className="col-12">
           <p className="form-label mb-2">
-            Category Score <span className="form-required">*</span>
+            Skor per Kategori <span className="form-required">*</span>
           </p>
           <div className="row g-3">
             {ASSESSMENT_CATEGORIES.map((category) => (
@@ -170,21 +172,20 @@ export function AssessmentFormModal({
           </div>
           {invalid ? (
             <p className="field-error mt-2 mb-0">
-              Every category score must be a number between 0 and 100.
+              Setiap skor kategori harus angka antara 0 dan 100.
             </p>
           ) : (
             <p className="field-hint">
-              The KPI score for the month is the average of these five
-              categories.
+              Skor KPI bulan ini adalah rata-rata dari lima kategori di atas.
             </p>
           )}
         </div>
 
-        <Field label="Notes" col="col-12">
+        <Field label="Catatan" col="col-12">
           <textarea
             className="form-control"
             rows={3}
-            placeholder="Short note about this assessment..."
+            placeholder="Catatan singkat tentang review ini..."
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
           />

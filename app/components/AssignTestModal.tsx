@@ -66,17 +66,17 @@ export function AssignTestModal({
   return (
     <Modal
       open={open}
-      title="Assign Test"
+      title="Tugaskan Tes"
       subtitle={
         employeeName
-          ? `Assign a test to ${employeeName}`
-          : "Assign a test to the selected employee"
+          ? `Tugaskan tes kepada ${employeeName}`
+          : "Tugaskan tes ke karyawan terpilih"
       }
       onClose={onClose}
       footer={
         <>
           <button type="button" className="btn-ghost" onClick={onClose}>
-            Cancel
+            Batal
           </button>
           <button
             type="button"
@@ -84,13 +84,13 @@ export function AssignTestModal({
             onClick={submit}
             disabled={!canSubmit}
           >
-            Assign Test
+            Tugaskan Tes
           </button>
         </>
       }
     >
       <div className="row g-3">
-        <Field label="Test" required>
+        <Field label="Tes" required>
           <TestSelect
             value={form.testId}
             onChange={(testId) => patch({ testId })}
@@ -101,8 +101,8 @@ export function AssignTestModal({
         <div className="col-12">
           <CheckField
             id="assign-date-range"
-            label="Set training date range"
-            hint="Leave unchecked to let the employee take the test at any time."
+            label="Atur rentang tanggal pelatihan"
+            hint="Biarkan kosong agar karyawan bisa mengerjakan kapan saja."
             checked={form.useDateRange}
             onChange={(useDateRange) =>
               patch(
@@ -114,7 +114,7 @@ export function AssignTestModal({
           />
         </div>
 
-        <Field label="Training Start" col="col-md-6">
+        <Field label="Mulai Pelatihan" col="col-md-6">
           <input
             type="date"
             className="form-control"
@@ -124,7 +124,7 @@ export function AssignTestModal({
           />
         </Field>
 
-        <Field label="Training End" col="col-md-6">
+        <Field label="Selesai Pelatihan" col="col-md-6">
           <input
             type="date"
             className="form-control"
@@ -138,7 +138,7 @@ export function AssignTestModal({
         {dateRangeInvalid ? (
           <div className="col-12">
             <p className="field-error mb-0">
-              Training end date must be on or after the start date.
+              Tanggal selesai harus sama atau setelah tanggal mulai.
             </p>
           </div>
         ) : null}
@@ -146,8 +146,8 @@ export function AssignTestModal({
         <div className="col-12">
           <CheckField
             id="assign-required"
-            label="Mark this training as required"
-            hint="Required trainings are counted in the employee compliance report."
+            label="Tandai pelatihan ini sebagai wajib"
+            hint="Pelatihan wajib dihitung dalam laporan kepatuhan karyawan."
             checked={form.required}
             onChange={(required) => patch({ required })}
           />

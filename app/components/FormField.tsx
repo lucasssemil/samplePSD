@@ -76,7 +76,7 @@ export function TestSelect({ value, onChange, options }: TestSelectProps) {
       onChange={(event) => onChange(event.target.value)}
     >
       <option value="" disabled>
-        Select test
+        Pilih tes
       </option>
       {options.map((option) => (
         <option key={option.id} value={option.id}>

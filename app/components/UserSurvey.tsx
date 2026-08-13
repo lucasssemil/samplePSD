@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Field } from "./FormField";
-import { CURRENT_EMPLOYEE_ID } from "../lib/employees";
+
 import {
   SURVEY_CATEGORIES,
   surveyCategoryClass,
@@ -11,11 +11,15 @@ import {
   type SurveyEntry,
 } from "../lib/surveys";
 
-const TODAY = "13 Aug 2026";
+const TODAY = "13 Agu 2026";
 
-export function UserSurvey() {
+type Props = {
+  employeeId: string;
+};
+
+export function UserSurvey({ employeeId }: Props) {
   const [history, setHistory] = useState<SurveyEntry[]>(() =>
-    [...surveysOf(CURRENT_EMPLOYEE_ID)].reverse()
+    [...surveysOf(employeeId)].reverse()
   );
   const [category, setCategory] = useState<SurveyCategory | "">("");
   const [notes, setNotes] = useState("");
@@ -28,10 +32,10 @@ export function UserSurvey() {
     setHistory((current) => [
       {
         id: `s-${Date.now()}`,
-        employeeId: CURRENT_EMPLOYEE_ID,
+        employeeId,
         category: category as SurveyCategory,
         // Sentiment is classified by HR after the survey is received.
-        sentiment: "Negative",
+        sentiment: "Negatif",
         submittedAt: TODAY,
         notes: notes.trim(),
       },
@@ -48,18 +52,18 @@ export function UserSurvey() {
         <div>
           <h1 className="page-title">Employee Company Survey</h1>
           <p className="page-sub">
-            Tell HR what is working and what needs attention
+            Sampaikan ke HR apa yang sudah baik dan apa yang perlu diperbaiki
           </p>
         </div>
       </div>
 
       <section className="panel mb-4">
         <div className="panel-head">
-          <h2 className="panel-title">Survey Form</h2>
+          <h2 className="panel-title">Form Survei</h2>
         </div>
         <div className="panel-body">
           <div className="row g-3">
-            <Field label="Category" required col="col-md-5">
+            <Field label="Kategori" required col="col-md-5">
               <select
                 className="form-select"
                 value={category}
@@ -69,7 +73,7 @@ export function UserSurvey() {
                 }}
               >
                 <option value="" disabled>
-                  Select category
+                  Pilih kategori
                 </option>
                 {SURVEY_CATEGORIES.map((option) => (
                   <option key={option} value={option}>
@@ -80,15 +84,15 @@ export function UserSurvey() {
             </Field>
 
             <Field
-              label="Notes"
+              label="Catatan"
               required
               col="col-12"
-              hint="Be specific — mention the outlet, shift or item involved."
+              hint="Tulis sedetail mungkin — sebutkan outlet, shift, atau barangnya."
             >
               <textarea
                 className="form-control"
                 rows={4}
-                placeholder="Write your feedback here..."
+                placeholder="Tulis masukan Anda di sini..."
                 value={notes}
                 onChange={(event) => {
                   setNotes(event.target.value);
@@ -101,11 +105,11 @@ export function UserSurvey() {
               <div className="col-12">
                 <div className="notice-card">
                   <span className="badge-status badge-published">
-                    Survey submitted
+                    Survei terkirim
                   </span>
                   <p className="sentiment-note mb-0 mt-2">
-                    Thank you. Your survey has been sent to HR and added to the
-                    history below.
+                    Terima kasih. Survei Anda sudah dikirim ke HR dan masuk ke
+                    riwayat di bawah.
                   </p>
                 </div>
               </div>
@@ -119,23 +123,23 @@ export function UserSurvey() {
             onClick={submit}
             disabled={!canSubmit}
           >
-            Submit Survey
+            Kirim Survei
           </button>
         </div>
       </section>
 
       <section className="panel">
         <div className="panel-head">
-          <h2 className="panel-title">History Survey Submitted</h2>
+          <h2 className="panel-title">Riwayat Survei Terkirim</h2>
         </div>
         <div className="table-responsive">
           <table className="table align-middle mb-0 data-table">
             <thead>
               <tr>
                 <th style={{ width: 60 }}>No</th>
-                <th style={{ width: 160 }}>Category</th>
-                <th style={{ width: 150 }}>Submitted</th>
-                <th>Notes</th>
+                <th style={{ width: 160 }}>Kategori</th>
+                <th style={{ width: 150 }}>Dikirim</th>
+                <th>Catatan</th>
               </tr>
             </thead>
             <tbody>
@@ -155,7 +159,7 @@ export function UserSurvey() {
               {history.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="text-center py-4 empty-text">
-                    You have not submitted any survey yet.
+                    Anda belum pernah mengirim survei.
                   </td>
                 </tr>
               ) : null}
@@ -164,7 +168,7 @@ export function UserSurvey() {
         </div>
         <div className="panel-foot">
           <span className="text-secondary">
-            {history.length} survey submitted
+            {history.length} survei terkirim
           </span>
         </div>
       </section>

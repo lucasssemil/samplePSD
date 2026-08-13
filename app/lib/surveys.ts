@@ -1,13 +1,17 @@
-export type SurveyCategory = "Safety" | "Assessment" | "Facility" | "Rules";
+export type SurveyCategory =
+  | "Keselamatan"
+  | "Penilaian"
+  | "Fasilitas"
+  | "Peraturan";
 
 export const SURVEY_CATEGORIES: SurveyCategory[] = [
-  "Safety",
-  "Assessment",
-  "Facility",
-  "Rules",
+  "Keselamatan",
+  "Penilaian",
+  "Fasilitas",
+  "Peraturan",
 ];
 
-export type SurveySentiment = "Positive" | "Negative";
+export type SurveySentiment = "Positif" | "Negatif";
 
 export type SurveyEntry = {
   id: string;
@@ -22,108 +26,108 @@ export const SURVEY_ENTRIES: SurveyEntry[] = [
   {
     id: "s1",
     employeeId: "e1",
-    category: "Safety",
-    sentiment: "Negative",
-    submittedAt: "04 Aug 2026",
+    category: "Keselamatan",
+    sentiment: "Negatif",
+    submittedAt: "04 Agu 2026",
     notes:
-      "Fire extinguisher near the frying station is past its inspection date. Please schedule a refill.",
+      "APAR dekat area penggorengan sudah lewat masa inspeksi. Mohon dijadwalkan isi ulang.",
   },
   {
     id: "s2",
     employeeId: "e1",
-    category: "Facility",
-    sentiment: "Negative",
-    submittedAt: "06 Aug 2026",
+    category: "Fasilitas",
+    sentiment: "Negatif",
+    submittedAt: "06 Agu 2026",
     notes:
-      "The crew locker room air conditioner has been leaking for two weeks. Floor gets slippery in the afternoon.",
+      "AC ruang loker crew bocor sudah dua minggu. Lantai jadi licin saat sore.",
   },
   {
     id: "s3",
     employeeId: "e2",
-    category: "Assessment",
-    sentiment: "Negative",
-    submittedAt: "05 Aug 2026",
+    category: "Penilaian",
+    sentiment: "Negatif",
+    submittedAt: "05 Agu 2026",
     notes:
-      "Post-test questions felt much harder than the training video. Some topics were never covered in the material.",
+      "Soal post-test terasa jauh lebih sulit daripada video pelatihan. Ada materi yang tidak pernah dibahas.",
   },
   {
     id: "s4",
     employeeId: "e2",
-    category: "Rules",
-    sentiment: "Negative",
-    submittedAt: "08 Aug 2026",
+    category: "Peraturan",
+    sentiment: "Negatif",
+    submittedAt: "08 Agu 2026",
     notes:
-      "Shift swap rules are not clear. Different supervisors apply the H-2 approval differently between outlets.",
+      "Aturan tukar shift belum jelas. Tiap supervisor menerapkan persetujuan H-2 berbeda-beda antar outlet.",
   },
   {
     id: "s5",
     employeeId: "e3",
-    category: "Safety",
-    sentiment: "Negative",
-    submittedAt: "07 Aug 2026",
+    category: "Keselamatan",
+    sentiment: "Negatif",
+    submittedAt: "07 Agu 2026",
     notes:
-      "Requesting anti-slip shoes for the dishwashing area. Two crew members slipped last month.",
+      "Mohon sepatu anti-slip untuk area cuci piring. Bulan lalu dua crew terpeleset.",
   },
   {
     id: "s6",
     employeeId: "e4",
-    category: "Facility",
-    sentiment: "Negative",
-    submittedAt: "09 Aug 2026",
+    category: "Fasilitas",
+    sentiment: "Negatif",
+    submittedAt: "09 Agu 2026",
     notes:
-      "Cashier desk lighting is too dim during the evening shift, hard to check banknotes.",
+      "Penerangan meja kasir terlalu redup saat shift malam, sulit memeriksa uang kertas.",
   },
   {
     id: "s7",
     employeeId: "e4",
-    category: "Assessment",
-    sentiment: "Positive",
-    submittedAt: "11 Aug 2026",
+    category: "Penilaian",
+    sentiment: "Positif",
+    submittedAt: "11 Agu 2026",
     notes:
-      "Would prefer the pre-test to be available on mobile so it can be done before the shift starts.",
+      "Lebih enak kalau pre-test bisa dibuka di HP supaya bisa dikerjakan sebelum shift dimulai.",
   },
   {
     id: "s8",
     employeeId: "e6",
-    category: "Rules",
-    sentiment: "Positive",
-    submittedAt: "10 Aug 2026",
+    category: "Peraturan",
+    sentiment: "Positif",
+    submittedAt: "10 Agu 2026",
     notes:
-      "Suggest publishing the updated leave policy on the portal — the printed copy on the board is outdated.",
+      "Usul agar kebijakan cuti terbaru diunggah ke portal — salinan cetak di papan sudah kedaluwarsa.",
   },
   {
     id: "s9",
     employeeId: "e6",
-    category: "Safety",
-    sentiment: "Negative",
-    submittedAt: "12 Aug 2026",
+    category: "Keselamatan",
+    sentiment: "Negatif",
+    submittedAt: "12 Agu 2026",
     notes:
-      "K3 briefing is only done for morning shift. Night shift crew never receives it.",
+      "Briefing K3 hanya dilakukan untuk shift pagi. Crew shift malam tidak pernah mendapatkannya.",
   },
   {
     id: "s10",
     employeeId: "e1",
-    category: "Assessment",
-    sentiment: "Positive",
-    submittedAt: "13 Aug 2026",
+    category: "Penilaian",
+    sentiment: "Positif",
+    submittedAt: "13 Agu 2026",
     notes:
       "The new pre-test then video then post-test flow is clear. The video really helped before taking the post-test.",
   },
   {
     id: "s11",
     employeeId: "e3",
-    category: "Facility",
-    sentiment: "Positive",
-    submittedAt: "13 Aug 2026",
+    category: "Fasilitas",
+    sentiment: "Positif",
+    submittedAt: "13 Agu 2026",
     notes:
       "New crew room chairs and lockers at Outlet Bintaro are a big improvement, thank you.",
   },
   {
     id: "s12",
     employeeId: "e5",
-    category: "Safety",
-    sentiment: "Positive",
-    submittedAt: "12 Aug 2026",
+    category: "Keselamatan",
+    sentiment: "Positif",
+    submittedAt: "12 Agu 2026",
     notes:
       "Monthly safety briefing at Central Kitchen is consistent and easy to follow. Checklist on the wall helps.",
   },
@@ -134,8 +138,8 @@ export function surveysOf(employeeId: string) {
 }
 
 export function surveyCategoryClass(category: SurveyCategory) {
-  if (category === "Safety") return "badge-status badge-failed";
-  if (category === "Assessment") return "badge-status badge-published";
-  if (category === "Facility") return "badge-status badge-draft";
+  if (category === "Keselamatan") return "badge-status badge-failed";
+  if (category === "Penilaian") return "badge-status badge-published";
+  if (category === "Fasilitas") return "badge-status badge-draft";
   return "badge-status badge-required";
 }

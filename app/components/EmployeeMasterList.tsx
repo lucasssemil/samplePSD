@@ -2,7 +2,11 @@
 
 import { useMemo, useState } from "react";
 import { EmployeeEditModal, type EmployeeProfile } from "./EmployeeEditModal";
-import type { EmployeeRow } from "../lib/employees";
+import {
+  finishedTrainings,
+  levelOf,
+  type EmployeeRow,
+} from "../lib/employees";
 
 type Props = {
   employees: EmployeeRow[];
@@ -29,13 +33,13 @@ export function EmployeeMasterList({ employees, onSaveProfile }: Props) {
       <div className="page-head">
         <div>
           <h1 className="page-title">Employee Master</h1>
-          <p className="page-sub">Employee profile and personal information</p>
+          <p className="page-sub">Profil dan data pribadi karyawan</p>
         </div>
       </div>
 
       <section className="panel">
         <div className="panel-head">
-          <h2 className="panel-title">Employee List</h2>
+          <h2 className="panel-title">Daftar Karyawan</h2>
           <div className="table-search">
             <svg
               width="16"
@@ -52,7 +56,7 @@ export function EmployeeMasterList({ employees, onSaveProfile }: Props) {
             </svg>
             <input
               type="text"
-              placeholder="Search employee..."
+              placeholder="Cari karyawan..."
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -64,21 +68,41 @@ export function EmployeeMasterList({ employees, onSaveProfile }: Props) {
             <thead>
               <tr>
                 <th style={{ width: 60 }}>No</th>
-                <th>Employee Number</th>
-                <th>Name</th>
-                <th>Position</th>
+                <th>Nomor Karyawan</th>
+                <th>Nama</th>
+                <th>Jabatan</th>
+                <th className="text-center">Level</th>
+                <th>Status</th>
                 <th className="text-center" style={{ width: 120 }}>
-                  Action
+                  Aksi
                 </th>
               </tr>
             </thead>
             <tbody>
-              {rows.map((employee, index) => (
+              {rows.map((employee, index) => {
+                const level = levelOf(finishedTrainings(employee));
+                return (
                 <tr key={employee.id}>
                   <td className="text-secondary">{index + 1}</td>
                   <td className="fw-semibold">{employee.nik}</td>
                   <td>{employee.name}</td>
                   <td>{employee.position}</td>
+                  <td className="text-center">
+                    <span className="badge-status badge-level">
+                      Lv {level.level} &middot; {level.name}
+                    </span>
+                  </td>
+                  <td>
+                    <span
+                      className={
+                        employee.active
+                          ? "badge-status badge-published"
+                          : "badge-status badge-archived"
+                      }
+                    >
+                      {employee.active ? "Aktif" : "Tidak Aktif"}
+                    </span>
+                  </td>
                   <td>
                     <div className="d-flex justify-content-center">
                       <button
@@ -100,17 +124,18 @@ export function EmployeeMasterList({ employees, onSaveProfile }: Props) {
                           <path d="M4 20h4L19 9l-4-4L4 16v4Z" />
                           <path d="m14.5 5.5 4 4" />
                         </svg>
-                        Edit
+                        Ubah
                       </button>
                     </div>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
 
               {rows.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-4 empty-text">
-                    No employee matches &ldquo;{query}&rdquo;.
+                  <td colSpan={7} className="text-center py-4 empty-text">
+                    Tidak ada karyawan yang cocok dengan &ldquo;{query}&rdquo;.
                   </td>
                 </tr>
               ) : null}
@@ -120,7 +145,7 @@ export function EmployeeMasterList({ employees, onSaveProfile }: Props) {
 
         <div className="panel-foot">
           <span className="text-secondary">
-            Showing {rows.length} of {employees.length} employees
+            Menampilkan {rows.length} dari {employees.length} karyawan
           </span>
           <nav>
             <ul className="pagination pagination-sm mb-0">

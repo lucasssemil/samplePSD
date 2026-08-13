@@ -30,14 +30,14 @@ export function EmployeeTrainingList({ employees, onDetail }: Props) {
         <div>
           <h1 className="page-title">Employee Training</h1>
           <p className="page-sub">
-            Assign tests and monitor pre-test and post-test progress
+            Tugaskan tes dan pantau progres pre-test dan post-test
           </p>
         </div>
       </div>
 
       <section className="panel">
         <div className="panel-head">
-          <h2 className="panel-title">Employee List</h2>
+          <h2 className="panel-title">Daftar Karyawan</h2>
           <div className="table-search">
             <svg
               width="16"
@@ -54,7 +54,7 @@ export function EmployeeTrainingList({ employees, onDetail }: Props) {
             </svg>
             <input
               type="text"
-              placeholder="Search employee..."
+              placeholder="Cari karyawan..."
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -66,15 +66,15 @@ export function EmployeeTrainingList({ employees, onDetail }: Props) {
             <thead>
               <tr>
                 <th style={{ width: 60 }}>No</th>
-                <th>NIK</th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Department</th>
+                <th>Nomor Karyawan</th>
+                <th>Nama</th>
+                <th>Jabatan</th>
+                <th>Departemen</th>
                 <th>Outlet</th>
-                <th className="text-center">Assigned</th>
-                <th className="text-center">Completed</th>
+                <th className="text-center">Ditugaskan</th>
+                <th className="text-center">Selesai</th>
                 <th className="text-center" style={{ width: 190 }}>
-                  Action
+                  Aksi
                 </th>
               </tr>
             </thead>
@@ -133,7 +133,7 @@ export function EmployeeTrainingList({ employees, onDetail }: Props) {
                           >
                             <path d="M12 5v14M5 12h14" />
                           </svg>
-                          Assign
+                          Tugaskan
                         </button>
                       </div>
                     </td>
@@ -144,7 +144,7 @@ export function EmployeeTrainingList({ employees, onDetail }: Props) {
               {rows.length === 0 ? (
                 <tr>
                   <td colSpan={9} className="text-center py-4 empty-text">
-                    No employee matches &ldquo;{query}&rdquo;.
+                    Tidak ada karyawan yang cocok dengan &ldquo;{query}&rdquo;.
                   </td>
                 </tr>
               ) : null}
@@ -154,7 +154,7 @@ export function EmployeeTrainingList({ employees, onDetail }: Props) {
 
         <div className="panel-foot">
           <span className="text-secondary">
-            Showing {rows.length} of {employees.length} employees
+            Menampilkan {rows.length} dari {employees.length} karyawan
           </span>
           <nav>
             <ul className="pagination pagination-sm mb-0">

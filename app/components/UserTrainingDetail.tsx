@@ -54,11 +54,11 @@ export function UserTrainingDetail({ item, onBack }: Props) {
 
   function statusOf(phase: Phase) {
     const fresh = results[phase];
-    if (fresh) return fresh.passed ? "Passed" : "Failed";
+    if (fresh) return fresh.passed ? "Lulus" : "Tidak Lulus";
     return (phase === "pre" ? item.preTest : item.postTest).status;
   }
 
-  const preDone = statusOf("pre") === "Passed" || statusOf("pre") === "Failed";
+  const preDone = statusOf("pre") === "Lulus" || statusOf("pre") === "Tidak Lulus";
 
   return (
     <>
@@ -68,7 +68,7 @@ export function UserTrainingDetail({ item, onBack }: Props) {
             type="button"
             className="btn-back"
             onClick={onBack}
-            aria-label="Back to training list"
+            aria-label="Kembali ke daftar pelatihan"
           >
             <svg
               width="18"
@@ -90,7 +90,7 @@ export function UserTrainingDetail({ item, onBack }: Props) {
               {item.code} &middot; {item.category} &middot;{" "}
               {item.trainingStart && item.trainingEnd
                 ? `${item.trainingStart} — ${item.trainingEnd}`
-                : "No date range"}
+                : "Tanpa rentang tanggal"}
             </p>
           </div>
         </div>
@@ -112,16 +112,16 @@ export function UserTrainingDetail({ item, onBack }: Props) {
         <>
           <section className="panel mb-4">
             <div className="panel-head">
-              <h2 className="panel-title">Training Video</h2>
+              <h2 className="panel-title">Video Pelatihan</h2>
               <span className="text-secondary" style={{ fontSize: 13.5 }}>
-                Watch this before taking the post-test
+                Tonton dulu sebelum mengerjakan post-test
               </span>
             </div>
             <div className="panel-body">
               <div className="video-frame">
                 <iframe
                   src={`https://www.youtube.com/embed/${VIDEO_ID}`}
-                  title={`Training video for ${item.title}`}
+                  title={`Video pelatihan untuk ${item.title}`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
@@ -139,7 +139,7 @@ export function UserTrainingDetail({ item, onBack }: Props) {
                 <div className="col-md-6" key={phase}>
                   <div className="stat-card h-100">
                     <div className="d-flex align-items-center justify-content-between gap-2">
-                      <span className="stat-label">{label} Score</span>
+                      <span className="stat-label">Skor {label}</span>
                       <span className={attemptStatusClass(status)}>
                         {status}
                       </span>
@@ -147,11 +147,11 @@ export function UserTrainingDetail({ item, onBack }: Props) {
                     <span className="stat-value">
                       {score === null ? "—" : score}
                       <span className="score-total">
-                        /{item.passingScore} to pass
+                        /{item.passingScore} untuk lulus
                       </span>
                     </span>
                     <span className="field-hint mt-0">
-                      10 questions &middot; time limit {duration} minutes
+                      10 soal &middot; batas waktu {duration} menit
                     </span>
                     <div className="mt-3">
                       <button
@@ -160,11 +160,11 @@ export function UserTrainingDetail({ item, onBack }: Props) {
                         onClick={() => start(phase)}
                         disabled={blocked}
                       >
-                        Do {label}
+                        Kerjakan {label}
                       </button>
                       {blocked ? (
                         <p className="field-hint mb-0">
-                          Finish the pre-test first.
+                          Selesaikan pre-test terlebih dahulu.
                         </p>
                       ) : null}
                     </div>
@@ -177,7 +177,7 @@ export function UserTrainingDetail({ item, onBack }: Props) {
           {results.pre || results.post ? (
             <section className="panel">
               <div className="panel-head">
-                <h2 className="panel-title">Result This Session</h2>
+                <h2 className="panel-title">Hasil Sesi Ini</h2>
               </div>
               <div className="panel-body">
                 <ul className="sentiment-list">
@@ -202,12 +202,12 @@ export function UserTrainingDetail({ item, onBack }: Props) {
                                 : "badge-status badge-failed"
                             }
                           >
-                            {result.passed ? "Passed" : "Failed"}
+                            {result.passed ? "Lulus" : "Tidak Lulus"}
                           </span>
                         </div>
                         <p className="sentiment-note mb-0">
-                          {result.correct} of {result.total} correct &middot;
-                          score {result.score} (passing {item.passingScore})
+                          {result.correct} dari {result.total} benar &middot;
+                          skor {result.score} (minimal {item.passingScore})
                         </p>
                       </li>
                     );

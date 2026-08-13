@@ -89,8 +89,8 @@ export function TestRunner({
             {phaseLabel} &middot; {title}
           </h2>
           <p className="page-sub mt-1">
-            {questions.length} random multiple choice questions &middot; passing
-            score {passingScore}
+            {questions.length} soal pilihan ganda acak &middot; nilai minimal{" "}
+            {passingScore}
           </p>
         </div>
         <span className={`quiz-timer${low ? " quiz-timer-low" : ""}`}>
@@ -116,12 +116,12 @@ export function TestRunner({
           <div className="question-card mb-3" key={question.id}>
             <div className="d-flex justify-content-between align-items-start gap-2 mb-3">
               <span className="question-index">
-                Question {index + 1} of {questions.length}
+                Soal {index + 1} dari {questions.length}
               </span>
               {answers[question.id] !== undefined ? (
-                <span className="badge-status badge-published">Answered</span>
+                <span className="badge-status badge-published">Terjawab</span>
               ) : (
-                <span className="badge-status badge-archived">Not answered</span>
+                <span className="badge-status badge-archived">Belum dijawab</span>
               )}
             </div>
 
@@ -157,11 +157,11 @@ export function TestRunner({
 
       <div className="panel-foot">
         <span className="text-secondary">
-          {answered} of {questions.length} answered
+          {answered} dari {questions.length} soal terjawab
         </span>
         <div className="d-flex gap-2">
           <button type="button" className="btn-ghost" onClick={onCancel}>
-            Cancel
+            Batal
           </button>
           <button
             type="button"
@@ -169,7 +169,7 @@ export function TestRunner({
             onClick={submit}
             disabled={answered === 0}
           >
-            Submit Answers
+            Kumpulkan Jawaban
           </button>
         </div>
       </div>

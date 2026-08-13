@@ -37,11 +37,11 @@ export function CompanySurveyDetail({ employee, onBack }: Props) {
       <>
         <div className="page-head">
           <button type="button" className="btn-ghost" onClick={onBack}>
-            Back to employee list
+            Kembali ke daftar karyawan
           </button>
         </div>
         <section className="panel panel-empty">
-          <p className="empty-text mb-0">Employee not found.</p>
+          <p className="empty-text mb-0">Karyawan tidak ditemukan.</p>
         </section>
       </>
     );
@@ -55,7 +55,7 @@ export function CompanySurveyDetail({ employee, onBack }: Props) {
             type="button"
             className="btn-back"
             onClick={onBack}
-            aria-label="Back to employee list"
+            aria-label="Kembali ke daftar karyawan"
           >
             <svg
               width="18"
@@ -96,8 +96,8 @@ export function CompanySurveyDetail({ employee, onBack }: Props) {
 
       <section className="panel">
         <div className="panel-head">
-          <h2 className="panel-title">Survey Submitted</h2>
-          <div className="phase-tabs" role="tablist" aria-label="Survey category">
+          <h2 className="panel-title">Survei yang Dikirim</h2>
+          <div className="phase-tabs" role="tablist" aria-label="Kategori survei">
             {(["All", ...SURVEY_CATEGORIES] as Filter[]).map((value) => (
               <button
                 key={value}
@@ -118,9 +118,9 @@ export function CompanySurveyDetail({ employee, onBack }: Props) {
             <thead>
               <tr>
                 <th style={{ width: 60 }}>No</th>
-                <th style={{ width: 160 }}>Category</th>
-                <th style={{ width: 150 }}>Submitted</th>
-                <th>Notes</th>
+                <th style={{ width: 160 }}>Kategori</th>
+                <th style={{ width: 150 }}>Dikirim</th>
+                <th>Catatan</th>
               </tr>
             </thead>
             <tbody>
@@ -141,8 +141,8 @@ export function CompanySurveyDetail({ employee, onBack }: Props) {
                 <tr>
                   <td colSpan={4} className="text-center py-4 empty-text">
                     {entries.length === 0
-                      ? "This employee has not filled any survey yet."
-                      : `No ${filter} survey from this employee.`}
+                      ? "Karyawan ini belum pernah mengisi survei."
+                      : `Tidak ada survei ${filter} dari karyawan ini.`}
                   </td>
                 </tr>
               ) : null}
@@ -152,7 +152,7 @@ export function CompanySurveyDetail({ employee, onBack }: Props) {
 
         <div className="panel-foot">
           <span className="text-secondary">
-            Showing {rows.length} of {entries.length} survey entries
+            Menampilkan {rows.length} dari {entries.length} entri survei
           </span>
         </div>
       </section>

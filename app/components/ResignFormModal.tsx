@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { Field } from "./FormField";
 import { Modal } from "./Modal";
+import { RESIGN_CATEGORIES, type ResignCategory } from "../lib/resignations";
 
 export type ResignSubmission = {
+  category: ResignCategory;
   resignDate: string;
   reason: string;
 };
@@ -16,34 +18,41 @@ type Props = {
 };
 
 export function ResignFormModal({ open, onClose, onSubmit }: Props) {
+  const [category, setCategory] = useState<ResignCategory | "">("");
   const [resignDate, setResignDate] = useState("");
   const [reason, setReason] = useState("");
 
   useEffect(() => {
     if (open) {
+      setCategory("");
       setResignDate("");
       setReason("");
     }
   }, [open]);
 
-  const canSubmit = resignDate !== "" && reason.trim() !== "";
+  const canSubmit =
+    category !== "" && resignDate !== "" && reason.trim() !== "";
 
   function submit() {
     if (!canSubmit) return;
-    onSubmit({ resignDate, reason: reason.trim() });
+    onSubmit({
+      category: category as ResignCategory,
+      resignDate,
+      reason: reason.trim(),
+    });
     onClose();
   }
 
   return (
     <Modal
       open={open}
-      title="Resign Form"
-      subtitle="Submit your resignation request to HR"
+      title="Form Resign"
+      subtitle="Ajukan permohonan pengunduran diri ke HR"
       onClose={onClose}
       footer={
         <>
           <button type="button" className="btn-ghost" onClick={onClose}>
-            Cancel
+            Batal
           </button>
           <button
             type="button"
@@ -51,17 +60,36 @@ export function ResignFormModal({ open, onClose, onSubmit }: Props) {
             onClick={submit}
             disabled={!canSubmit}
           >
-            Submit Form
+            Kirim Form
           </button>
         </>
       }
     >
       <div className="row g-3">
+        <Field label="Kategori" required col="col-md-6">
+          <select
+            className="form-select"
+            value={category}
+            onChange={(event) =>
+              setCategory(event.target.value as ResignCategory)
+            }
+          >
+            <option value="" disabled>
+              Pilih kategori
+            </option>
+            {RESIGN_CATEGORIES.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </Field>
+
         <Field
-          label="Resign Date"
+          label="Tanggal Resign"
           required
           col="col-md-6"
-          hint="Your intended last working day."
+          hint="Rencana hari kerja terakhir Anda."
         >
           <input
             type="date"
@@ -71,11 +99,11 @@ export function ResignFormModal({ open, onClose, onSubmit }: Props) {
           />
         </Field>
 
-        <Field label="Reason" required col="col-12">
+        <Field label="Alasan" required col="col-12">
           <textarea
             className="form-control"
             rows={4}
-            placeholder="Explain the reason for your resignation..."
+            placeholder="Jelaskan alasan pengunduran diri Anda..."
             value={reason}
             onChange={(event) => setReason(event.target.value)}
           />

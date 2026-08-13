@@ -36,8 +36,8 @@ const PHASE_LABEL: Record<Phase, string> = {
 };
 
 const PHASE_HINT: Record<Phase, string> = {
-  pre: "Taken before the employee watches the training video.",
-  post: "Taken after the training video to measure improvement.",
+  pre: "Dikerjakan sebelum karyawan menonton video pelatihan.",
+  post: "Dikerjakan setelah video pelatihan untuk mengukur peningkatan.",
 };
 
 export function LmsCreateTest({ onBack }: Props) {
@@ -89,7 +89,7 @@ export function LmsCreateTest({ onBack }: Props) {
             type="button"
             className="btn-back"
             onClick={onBack}
-            aria-label="Back to test list"
+            aria-label="Kembali ke daftar tes"
           >
             <svg
               width="18"
@@ -106,9 +106,9 @@ export function LmsCreateTest({ onBack }: Props) {
             </svg>
           </button>
           <div>
-            <h1 className="page-title">Create New Test</h1>
+            <h1 className="page-title">Buat Tes Baru</h1>
             <p className="page-sub">
-              A test must consist of a pre-test, a post-test and a video link
+              Setiap tes wajib memiliki pre-test, post-test, dan link video
             </p>
           </div>
         </div>
@@ -116,12 +116,12 @@ export function LmsCreateTest({ onBack }: Props) {
 
       <section className="panel mb-4">
         <div className="panel-head">
-          <h2 className="panel-title">Test Information</h2>
+          <h2 className="panel-title">Informasi Tes</h2>
         </div>
 
         <div className="panel-body">
           <div className="row g-3">
-            <Field label="Test Title" required col="col-md-6">
+            <Field label="Judul Tes" required col="col-md-6">
               <input
                 type="text"
                 className="form-control"
@@ -129,7 +129,7 @@ export function LmsCreateTest({ onBack }: Props) {
               />
             </Field>
 
-            <Field label="Test Code" required col="col-md-6">
+            <Field label="Kode Tes" required col="col-md-6">
               <input
                 type="text"
                 className="form-control"
@@ -137,10 +137,10 @@ export function LmsCreateTest({ onBack }: Props) {
               />
             </Field>
 
-            <Field label="Category" required col="col-md-6">
+            <Field label="Kategori" required col="col-md-6">
               <select className="form-select" defaultValue="">
                 <option value="" disabled>
-                  Select category
+                  Pilih kategori
                 </option>
                 {TEST_CATEGORIES.map((category) => (
                   <option key={category} value={category}>
@@ -150,19 +150,19 @@ export function LmsCreateTest({ onBack }: Props) {
               </select>
             </Field>
 
-            <Field label="Duration (minutes)" col="col-md-3">
+            <Field label="Durasi (menit)" col="col-md-3">
               <input type="number" className="form-control" placeholder="30" />
             </Field>
 
-            <Field label="Passing Score" col="col-md-3">
+            <Field label="Nilai Minimal" col="col-md-3">
               <input type="number" className="form-control" placeholder="75" />
             </Field>
 
             <Field
-              label="Training Video Link"
+              label="Link Video Pelatihan"
               required
               col="col-12"
-              hint="The video the employee watches between the pre-test and the post-test."
+              hint="Video yang ditonton karyawan di antara pre-test dan post-test."
             >
               <input
                 type="url"
@@ -173,18 +173,18 @@ export function LmsCreateTest({ onBack }: Props) {
               />
             </Field>
 
-            <Field label="Description" col="col-12">
+            <Field label="Deskripsi" col="col-12">
               <textarea
                 className="form-control"
                 rows={3}
-                placeholder="Short description of this test..."
+                placeholder="Deskripsi singkat tentang tes ini..."
               />
             </Field>
 
             <Field label="Status" col="col-md-6">
               <select className="form-select" defaultValue="Draft">
                 <option>Draft</option>
-                <option>Published</option>
+                <option>Terbit</option>
               </select>
             </Field>
           </div>
@@ -193,7 +193,7 @@ export function LmsCreateTest({ onBack }: Props) {
 
       <section className="panel">
         <div className="panel-head">
-          <div className="phase-tabs" role="tablist" aria-label="Test phase">
+          <div className="phase-tabs" role="tablist" aria-label="Tahap tes">
             {(["pre", "post"] as Phase[]).map((value) => (
               <button
                 key={value}
@@ -228,7 +228,7 @@ export function LmsCreateTest({ onBack }: Props) {
             >
               <path d="M12 5v14M5 12h14" />
             </svg>
-            Add Question
+            Tambah Soal
           </button>
         </div>
 
@@ -239,16 +239,16 @@ export function LmsCreateTest({ onBack }: Props) {
             <div className="question-card mb-3" key={question.id}>
               <div className="d-flex justify-content-between align-items-start mb-3 gap-2">
                 <span className="question-index">
-                  {PHASE_LABEL[phase]} &middot; Question {index + 1}
+                  {PHASE_LABEL[phase]} &middot; Soal {index + 1}
                 </span>
                 <div className="d-flex align-items-center gap-2">
                   <span className="badge-status badge-draft">
-                    Multiple Choice
+                    Pilihan Ganda
                   </span>
                   <button
                     type="button"
                     className="icon-btn icon-btn-danger"
-                    title="Remove question"
+                    title="Hapus soal"
                     onClick={() => removeQuestion(question.id)}
                     disabled={active.length === 1}
                   >
@@ -271,7 +271,7 @@ export function LmsCreateTest({ onBack }: Props) {
               <input
                 type="text"
                 className="form-control mb-3"
-                placeholder="Type the question here..."
+                placeholder="Tulis pertanyaannya di sini..."
                 value={question.text}
                 onChange={(event) =>
                   patchQuestion(question.id, { text: event.target.value })
@@ -286,7 +286,7 @@ export function LmsCreateTest({ onBack }: Props) {
                         type="radio"
                         name={`${phase}-${question.id}-answer`}
                         className="form-check-input mt-0"
-                        aria-label={`Correct answer ${letter}`}
+                        aria-label={`Jawaban benar ${letter}`}
                         checked={question.answer === optionIndex}
                         onChange={() =>
                           patchQuestion(question.id, { answer: optionIndex })
@@ -296,7 +296,7 @@ export function LmsCreateTest({ onBack }: Props) {
                       <input
                         type="text"
                         className="form-control form-control-sm"
-                        placeholder={`Option ${letter}`}
+                        placeholder={`Opsi ${letter}`}
                         value={question.options[optionIndex]}
                         onChange={(event) =>
                           patchQuestion(question.id, {
@@ -314,16 +314,16 @@ export function LmsCreateTest({ onBack }: Props) {
           ))}
 
           <p className="empty-text mb-0">
-            Select the radio button next to the correct answer.
+            Pilih radio button di samping jawaban yang benar.
           </p>
         </div>
 
         <div className="panel-foot flex-column align-items-stretch gap-3">
           <ul className="requirement-list">
             {[
-              { label: "At least one pre-test question", ok: preFilled > 0 },
-              { label: "At least one post-test question", ok: postFilled > 0 },
-              { label: "Training video link", ok: videoValid },
+              { label: "Minimal satu soal pre-test", ok: preFilled > 0 },
+              { label: "Minimal satu soal post-test", ok: postFilled > 0 },
+              { label: "Link video pelatihan", ok: videoValid },
             ].map((item) => (
               <li
                 key={item.label}
@@ -353,10 +353,10 @@ export function LmsCreateTest({ onBack }: Props) {
 
           <div className="d-flex justify-content-end gap-2">
             <button type="button" className="btn-ghost" onClick={onBack}>
-              Cancel
+              Batal
             </button>
             <button type="button" className="btn-brand" disabled={!canSave}>
-              Save Test
+              Simpan Tes
             </button>
           </div>
         </div>

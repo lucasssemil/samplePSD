@@ -1,4 +1,4 @@
-export type TestStatus = "Published" | "Draft" | "Archived";
+export type TestStatus = "Terbit" | "Draft" | "Arsip";
 
 export type TestRow = {
   id: string;
@@ -24,8 +24,8 @@ export const TEST_LIST: TestRow[] = [
     postQuestions: 15,
     videoLink: "https://youtu.be/food-safety-101",
     duration: 30,
-    status: "Published",
-    createdAt: "02 Aug 2026",
+    status: "Terbit",
+    createdAt: "02 Agu 2026",
   },
   {
     id: "2",
@@ -36,8 +36,8 @@ export const TEST_LIST: TestRow[] = [
     postQuestions: 12,
     videoLink: "https://youtu.be/service-excellence",
     duration: 25,
-    status: "Published",
-    createdAt: "05 Aug 2026",
+    status: "Terbit",
+    createdAt: "05 Agu 2026",
   },
   {
     id: "3",
@@ -49,7 +49,7 @@ export const TEST_LIST: TestRow[] = [
     videoLink: "https://youtu.be/sop-outlet",
     duration: 45,
     status: "Draft",
-    createdAt: "07 Aug 2026",
+    createdAt: "07 Agu 2026",
   },
   {
     id: "4",
@@ -60,8 +60,8 @@ export const TEST_LIST: TestRow[] = [
     postQuestions: 10,
     videoLink: "https://youtu.be/leadership-fundamental",
     duration: 40,
-    status: "Published",
-    createdAt: "09 Aug 2026",
+    status: "Terbit",
+    createdAt: "09 Agu 2026",
   },
   {
     id: "5",
@@ -73,7 +73,7 @@ export const TEST_LIST: TestRow[] = [
     videoLink: "https://youtu.be/k3-safety",
     duration: 30,
     status: "Draft",
-    createdAt: "10 Aug 2026",
+    createdAt: "10 Agu 2026",
   },
   {
     id: "6",
@@ -84,8 +84,8 @@ export const TEST_LIST: TestRow[] = [
     postQuestions: 9,
     videoLink: "https://youtu.be/bakery-line",
     duration: 20,
-    status: "Archived",
-    createdAt: "11 Aug 2026",
+    status: "Arsip",
+    createdAt: "11 Agu 2026",
   },
 ];
 

@@ -7,7 +7,7 @@ type Props = {
 };
 
 function statusClass(status: TestStatus) {
-  if (status === "Published") return "badge-status badge-published";
+  if (status === "Terbit") return "badge-status badge-published";
   if (status === "Draft") return "badge-status badge-draft";
   return "badge-status badge-archived";
 }
@@ -18,7 +18,7 @@ export function LmsTestList({ onCreate }: Props) {
       <div className="page-head">
         <div>
           <h1 className="page-title">LMS</h1>
-          <p className="page-sub">Manage tests and assessment materials</p>
+          <p className="page-sub">Kelola tes dan materi penilaian</p>
         </div>
 
         <button type="button" className="btn-brand" onClick={onCreate}>
@@ -34,13 +34,13 @@ export function LmsTestList({ onCreate }: Props) {
           >
             <path d="M12 5v14M5 12h14" />
           </svg>
-          Create New Test
+          Buat Tes Baru
         </button>
       </div>
 
       <section className="panel">
         <div className="panel-head">
-          <h2 className="panel-title">Test List</h2>
+          <h2 className="panel-title">Daftar Tes</h2>
           <div className="table-search">
             <svg
               width="16"
@@ -55,7 +55,7 @@ export function LmsTestList({ onCreate }: Props) {
               <circle cx="11" cy="11" r="7" />
               <path d="m20 20-3.2-3.2" />
             </svg>
-            <input type="text" placeholder="Search test..." />
+            <input type="text" placeholder="Cari tes..." />
           </div>
         </div>
 
@@ -64,16 +64,16 @@ export function LmsTestList({ onCreate }: Props) {
             <thead>
               <tr>
                 <th style={{ width: 60 }}>No</th>
-                <th>Test Code</th>
-                <th>Test Title</th>
-                <th>Category</th>
-                <th className="text-center">Questions</th>
+                <th>Kode Tes</th>
+                <th>Judul Tes</th>
+                <th>Kategori</th>
+                <th className="text-center">Soal</th>
                 <th className="text-center">Video</th>
-                <th className="text-center">Duration</th>
+                <th className="text-center">Durasi</th>
                 <th>Status</th>
-                <th>Created</th>
+                <th>Dibuat</th>
                 <th className="text-center" style={{ width: 120 }}>
-                  Action
+                  Aksi
                 </th>
               </tr>
             </thead>
@@ -105,20 +105,20 @@ export function LmsTestList({ onCreate }: Props) {
                       Video
                     </a>
                   </td>
-                  <td className="text-center">{row.duration} min</td>
+                  <td className="text-center">{row.duration} mnt</td>
                   <td>
                     <span className={statusClass(row.status)}>{row.status}</span>
                   </td>
                   <td className="text-secondary">{row.createdAt}</td>
                   <td>
                     <div className="d-flex justify-content-center gap-2">
-                      <button type="button" className="icon-btn" title="View">
+                      <button type="button" className="icon-btn" title="Lihat">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
                           <circle cx="12" cy="12" r="2.8" />
                         </svg>
                       </button>
-                      <button type="button" className="icon-btn" title="Edit">
+                      <button type="button" className="icon-btn" title="Ubah">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M4 20h4L19 9l-4-4L4 16v4Z" />
                           <path d="m14.5 5.5 4 4" />
@@ -127,7 +127,7 @@ export function LmsTestList({ onCreate }: Props) {
                       <button
                         type="button"
                         className="icon-btn icon-btn-danger"
-                        title="Delete"
+                        title="Hapus"
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M4 7h16M9.5 7V5h5v2M6.5 7l1 13h9l1-13" />
@@ -143,18 +143,18 @@ export function LmsTestList({ onCreate }: Props) {
 
         <div className="panel-foot">
           <span className="text-secondary">
-            Showing 1&ndash;{TEST_LIST.length} of {TEST_LIST.length} tests
+            Menampilkan 1&ndash;{TEST_LIST.length} dari {TEST_LIST.length} tes
           </span>
           <nav>
             <ul className="pagination pagination-sm mb-0">
               <li className="page-item disabled">
-                <span className="page-link">Prev</span>
+                <span className="page-link">Sebelumnya</span>
               </li>
               <li className="page-item active">
                 <span className="page-link">1</span>
               </li>
               <li className="page-item disabled">
-                <span className="page-link">Next</span>
+                <span className="page-link">Berikutnya</span>
               </li>
             </ul>
           </nav>

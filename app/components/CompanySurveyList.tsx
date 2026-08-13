@@ -29,14 +29,14 @@ export function CompanySurveyList({ employees, onDetail }: Props) {
         <div>
           <h1 className="page-title">Employee Company Survey</h1>
           <p className="page-sub">
-            Survey submitted by employees, grouped by category
+            Survei yang dikirim karyawan, dikelompokkan per kategori
           </p>
         </div>
       </div>
 
       <section className="panel">
         <div className="panel-head">
-          <h2 className="panel-title">Employee List</h2>
+          <h2 className="panel-title">Daftar Karyawan</h2>
           <div className="table-search">
             <svg
               width="16"
@@ -53,7 +53,7 @@ export function CompanySurveyList({ employees, onDetail }: Props) {
             </svg>
             <input
               type="text"
-              placeholder="Search employee..."
+              placeholder="Cari karyawan..."
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -65,14 +65,14 @@ export function CompanySurveyList({ employees, onDetail }: Props) {
             <thead>
               <tr>
                 <th style={{ width: 60 }}>No</th>
-                <th>Employee Number</th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Department</th>
-                <th className="text-center">Survey Filled</th>
-                <th>Last Submitted</th>
+                <th>Nomor Karyawan</th>
+                <th>Nama</th>
+                <th>Jabatan</th>
+                <th>Departemen</th>
+                <th className="text-center">Survei Diisi</th>
+                <th>Terakhir Dikirim</th>
                 <th className="text-center" style={{ width: 120 }}>
-                  Action
+                  Aksi
                 </th>
               </tr>
             </thead>
@@ -92,7 +92,7 @@ export function CompanySurveyList({ employees, onDetail }: Props) {
                       {last ? (
                         last.submittedAt
                       ) : (
-                        <span className="empty-text">Not filled yet</span>
+                        <span className="empty-text">Belum mengisi</span>
                       )}
                     </td>
                     <td>
@@ -127,7 +127,7 @@ export function CompanySurveyList({ employees, onDetail }: Props) {
               {rows.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="text-center py-4 empty-text">
-                    No employee matches &ldquo;{query}&rdquo;.
+                    Tidak ada karyawan yang cocok dengan &ldquo;{query}&rdquo;.
                   </td>
                 </tr>
               ) : null}
@@ -137,18 +137,18 @@ export function CompanySurveyList({ employees, onDetail }: Props) {
 
         <div className="panel-foot">
           <span className="text-secondary">
-            Showing {rows.length} of {employees.length} employees
+            Menampilkan {rows.length} dari {employees.length} karyawan
           </span>
           <nav>
             <ul className="pagination pagination-sm mb-0">
               <li className="page-item disabled">
-                <span className="page-link">Prev</span>
+                <span className="page-link">Sebelumnya</span>
               </li>
               <li className="page-item active">
                 <span className="page-link">1</span>
               </li>
               <li className="page-item disabled">
-                <span className="page-link">Next</span>
+                <span className="page-link">Berikutnya</span>
               </li>
             </ul>
           </nav>

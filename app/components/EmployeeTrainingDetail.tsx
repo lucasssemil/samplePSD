@@ -27,7 +27,7 @@ function ScoreCell({ attempt, passingScore }: { attempt: Attempt; passingScore: 
         ) : (
           <>
             {attempt.score}
-            <span className="score-total">/{passingScore} pass</span>
+            <span className="score-total">/{passingScore} lulus</span>
           </>
         )}
       </span>
@@ -51,11 +51,11 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
       <>
         <div className="page-head">
           <button type="button" className="btn-ghost" onClick={onBack}>
-            Back to employee list
+            Kembali ke daftar karyawan
           </button>
         </div>
         <section className="panel panel-empty">
-          <p className="empty-text mb-0">Employee not found.</p>
+          <p className="empty-text mb-0">Karyawan tidak ditemukan.</p>
         </section>
       </>
     );
@@ -63,7 +63,7 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
 
   const { done, total } = completionOf(employee);
   const passed = employee.assigned.filter(
-    (item) => item.postTest.status === "Passed"
+    (item) => item.postTest.status === "Lulus"
   ).length;
   const requiredCount = employee.assigned.filter((item) => item.required).length;
 
@@ -75,7 +75,7 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
             type="button"
             className="btn-back"
             onClick={onBack}
-            aria-label="Back to employee list"
+            aria-label="Kembali ke daftar karyawan"
           >
             <svg
               width="18"
@@ -117,16 +117,16 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
           >
             <path d="M12 5v14M5 12h14" />
           </svg>
-          Assign Test
+          Tugaskan Tes
         </button>
       </div>
 
       <div className="row g-3 mb-4">
         {[
-          { label: "Assigned Tests", value: total },
-          { label: "Completed", value: `${done}/${total}` },
-          { label: "Passed", value: passed },
-          { label: "Required", value: requiredCount },
+          { label: "Tes Ditugaskan", value: total },
+          { label: "Selesai", value: `${done}/${total}` },
+          { label: "Lulus", value: passed },
+          { label: "Wajib", value: requiredCount },
         ].map((stat) => (
           <div className="col-6 col-lg-3" key={stat.label}>
             <div className="stat-card">
@@ -139,25 +139,25 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
 
       <section className="panel mb-4">
         <div className="panel-head">
-          <h2 className="panel-title">Employee Information</h2>
+          <h2 className="panel-title">Informasi Karyawan</h2>
         </div>
         <div className="panel-body">
           <div className="row g-3">
             {[
-              { label: "Employee Number", value: employee.nik },
-              { label: "Full Name", value: employee.name },
-              { label: "Position", value: employee.position },
-              { label: "Department", value: employee.department },
+              { label: "Nomor Karyawan", value: employee.nik },
+              { label: "Nama Lengkap", value: employee.name },
+              { label: "Jabatan", value: employee.position },
+              { label: "Departemen", value: employee.department },
               { label: "Outlet", value: employee.outlet },
-              { label: "Joined", value: employee.joinedAt },
+              { label: "Bergabung", value: employee.joinedAt },
               {
-                label: "Date of Birth",
+                label: "Tanggal Lahir",
                 value: `${formatIsoDate(employee.dateOfBirth)} (${
                   ageFromIso(employee.dateOfBirth) ?? "—"
-                } yrs)`,
+                } thn)`,
               },
               { label: "Handphone", value: employee.phone },
-              { label: "Address", value: employee.address },
+              { label: "Alamat", value: employee.address },
             ].map((info) => (
               <div className="col-md-4" key={info.label}>
                 <span className="info-label">{info.label}</span>
@@ -170,9 +170,9 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
 
       <section className="panel">
         <div className="panel-head">
-          <h2 className="panel-title">Assigned Tests</h2>
+          <h2 className="panel-title">Tes yang Ditugaskan</h2>
           <span className="text-secondary" style={{ fontSize: 13.5 }}>
-            Pre-test and post-test result per assignment
+            Hasil pre-test dan post-test tiap penugasan
           </span>
         </div>
 
@@ -181,13 +181,13 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
             <thead>
               <tr>
                 <th style={{ width: 60 }}>No</th>
-                <th>Test Code</th>
-                <th>Test Title</th>
-                <th>Training Date</th>
-                <th className="text-center">Required</th>
+                <th>Kode Tes</th>
+                <th>Judul Tes</th>
+                <th>Tanggal Pelatihan</th>
+                <th className="text-center">Wajib</th>
                 <th style={{ width: 170 }}>Pre-Test</th>
                 <th style={{ width: 170 }}>Post-Test</th>
-                <th className="text-center">Improvement</th>
+                <th className="text-center">Peningkatan</th>
               </tr>
             </thead>
             <tbody>
@@ -207,7 +207,7 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
                       {item.trainingStart && item.trainingEnd ? (
                         `${item.trainingStart} — ${item.trainingEnd}`
                       ) : (
-                        <span className="empty-text">No date range</span>
+                        <span className="empty-text">Tanpa rentang tanggal</span>
                       )}
                     </td>
                     <td className="text-center">
@@ -218,7 +218,7 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
                             : "badge-status badge-archived"
                         }
                       >
-                        {item.required ? "Required" : "Optional"}
+                        {item.required ? "Wajib" : "Opsional"}
                       </span>
                     </td>
                     <td>
@@ -254,7 +254,7 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
               {employee.assigned.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="text-center py-4 empty-text">
-                    No test assigned to this employee yet.
+                    Belum ada tes yang ditugaskan ke karyawan ini.
                   </td>
                 </tr>
               ) : null}
@@ -264,7 +264,7 @@ export function EmployeeTrainingDetail({ employee, onBack }: Props) {
 
         <div className="panel-foot">
           <span className="text-secondary">
-            {total} assigned &middot; {done} completed &middot; {passed} passed
+            {total} ditugaskan &middot; {done} selesai &middot; {passed} lulus
           </span>
         </div>
       </section>

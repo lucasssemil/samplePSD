@@ -10,17 +10,18 @@ export const ASSESSMENT_CATEGORIES: {
   label: string;
   short: string;
 }[] = [
-  { key: "assignedTask", label: "Assigned Task", short: "Task" },
-  { key: "satisfactoryUser", label: "Satisfactory User", short: "Satisfaction" },
-  { key: "initiativePlan", label: "Initiative Plan", short: "Initiative" },
-  { key: "disciplinary", label: "Disciplinary", short: "Discipline" },
-  { key: "assessment", label: "Assessment", short: "Assessment" },
+  { key: "assignedTask", label: "Tugas yang Diberikan", short: "Tugas" },
+  { key: "satisfactoryUser", label: "Kepuasan Pengguna", short: "Kepuasan" },
+  { key: "initiativePlan", label: "Rencana Inisiatif", short: "Inisiatif" },
+  { key: "disciplinary", label: "Kedisiplinan", short: "Disiplin" },
+  { key: "assessment", label: "Penilaian", short: "Penilaian" },
 ];
 
 export type AssessmentScores = Record<AssessmentCategoryKey, number>;
 
 export type AssessmentEntry = {
   id: string;
+  employeeId: string;
   /** yyyy-mm, so it maps straight onto <input type="month">. */
   month: string;
   scores: AssessmentScores;
@@ -36,10 +37,11 @@ export function overallScore(scores: AssessmentScores) {
   return Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
 }
 
-/** 360 assessments already submitted by the signed-in employee. */
-export const ASSESSMENT_HISTORY: AssessmentEntry[] = [
+/** Monthly reviews already recorded, across employees. */
+export const REVIEW_HISTORY: AssessmentEntry[] = [
   {
     id: "as1",
+    employeeId: "e1",
     month: "2026-03",
     scores: {
       assignedTask: 70,
@@ -49,11 +51,12 @@ export const ASSESSMENT_HISTORY: AssessmentEntry[] = [
       assessment: 72,
     },
     score: 72,
-    notes: "First quarter review. Feedback from two peers and one supervisor.",
+    notes: "Review kuartal pertama. Masukan dari dua rekan kerja dan satu supervisor.",
     submittedAt: "02 Apr 2026",
   },
   {
     id: "as2",
+    employeeId: "e1",
     month: "2026-04",
     scores: {
       assignedTask: 78,
@@ -63,11 +66,12 @@ export const ASSESSMENT_HISTORY: AssessmentEntry[] = [
       assessment: 75,
     },
     score: 75,
-    notes: "Improved on shift handover checklist after coaching.",
+    notes: "Ada perbaikan pada checklist serah terima shift setelah coaching.",
     submittedAt: "03 May 2026",
   },
   {
     id: "as3",
+    employeeId: "e1",
     month: "2026-05",
     scores: {
       assignedTask: 68,
@@ -77,11 +81,12 @@ export const ASSESSMENT_HISTORY: AssessmentEntry[] = [
       assessment: 71,
     },
     score: 71,
-    notes: "Busy month, two peer reviews were submitted late.",
+    notes: "Bulan yang padat, dua penilaian rekan kerja terlambat masuk.",
     submittedAt: "04 Jun 2026",
   },
   {
     id: "as4",
+    employeeId: "e1",
     month: "2026-06",
     scores: {
       assignedTask: 82,
@@ -91,11 +96,12 @@ export const ASSESSMENT_HISTORY: AssessmentEntry[] = [
       assessment: 81,
     },
     score: 80,
-    notes: "Led the new crew onboarding, scored well on teamwork.",
+    notes: "Memimpin onboarding crew baru, nilai kerja sama tim bagus.",
     submittedAt: "02 Jul 2026",
   },
   {
     id: "as5",
+    employeeId: "e1",
     month: "2026-07",
     scores: {
       assignedTask: 86,
@@ -105,8 +111,53 @@ export const ASSESSMENT_HISTORY: AssessmentEntry[] = [
       assessment: 84,
     },
     score: 84,
-    notes: "Strong result on service standard and initiative.",
-    submittedAt: "03 Aug 2026",
+    notes: "Hasil bagus pada standar layanan dan inisiatif.",
+    submittedAt: "03 Agu 2026",
+  },
+  {
+    id: "as6",
+    employeeId: "e3",
+    month: "2026-05",
+    scores: {
+      assignedTask: 88,
+      satisfactoryUser: 90,
+      initiativePlan: 86,
+      disciplinary: 92,
+      assessment: 89,
+    },
+    score: 89,
+    notes: "Konsisten memimpin briefing pagi dan menjaga standar outlet.",
+    submittedAt: "03 Jun 2026",
+  },
+  {
+    id: "as7",
+    employeeId: "e3",
+    month: "2026-06",
+    scores: {
+      assignedTask: 90,
+      satisfactoryUser: 92,
+      initiativePlan: 88,
+      disciplinary: 94,
+      assessment: 91,
+    },
+    score: 91,
+    notes: "Inisiatif membuat jadwal shift baru yang lebih rapi.",
+    submittedAt: "02 Jul 2026",
+  },
+  {
+    id: "as8",
+    employeeId: "e6",
+    month: "2026-06",
+    scores: {
+      assignedTask: 86,
+      satisfactoryUser: 88,
+      initiativePlan: 90,
+      disciplinary: 88,
+      assessment: 88,
+    },
+    score: 88,
+    notes: "Menyelesaikan program rekrutmen crew baru tepat waktu.",
+    submittedAt: "01 Jul 2026",
   },
 ];
 
@@ -115,14 +166,14 @@ const MONTH_LABELS = [
   "Feb",
   "Mar",
   "Apr",
-  "May",
+  "Mei",
   "Jun",
   "Jul",
-  "Aug",
+  "Agu",
   "Sep",
-  "Oct",
+  "Okt",
   "Nov",
-  "Dec",
+  "Des",
 ];
 
 /** "2026-07" -> "Jul 2026". */
@@ -137,4 +188,10 @@ export function shortMonth(month: string) {
   const match = /^(\d{4})-(\d{2})$/.exec(month);
   if (!match) return month;
   return MONTH_LABELS[Number(match[2]) - 1];
+}
+
+export function reviewsOf(employeeId: string, entries: AssessmentEntry[]) {
+  return entries
+    .filter((entry) => entry.employeeId === employeeId)
+    .sort((a, b) => a.month.localeCompare(b.month));
 }

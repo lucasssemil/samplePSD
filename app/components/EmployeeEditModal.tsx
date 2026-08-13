@@ -7,6 +7,7 @@ import {
   DEPARTMENTS,
   OUTLETS,
   POSITIONS,
+  STAFF_LEVELS,
   type EmployeeRow,
 } from "../lib/employees";
 
@@ -23,6 +24,8 @@ export type EmployeeProfile = Pick<
   | "phone"
   | "email"
   | "address"
+  | "staffLevel"
+  | "active"
 >;
 
 type Props = {
@@ -44,6 +47,8 @@ function profileOf(employee: EmployeeRow): EmployeeProfile {
     phone: employee.phone,
     email: employee.email,
     address: employee.address,
+    staffLevel: employee.staffLevel,
+    active: employee.active,
   };
 }
 
@@ -77,13 +82,13 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
     <Modal
       open={open}
       size="lg"
-      title="Edit Employee"
-      subtitle={`Adjust the profile of ${employee.name}`}
+      title="Ubah Data Karyawan"
+      subtitle={`Perbarui profil ${employee.name}`}
       onClose={onClose}
       footer={
         <>
           <button type="button" className="btn-ghost" onClick={onClose}>
-            Cancel
+            Batal
           </button>
           <button
             type="button"
@@ -91,13 +96,13 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
             onClick={save}
             disabled={!canSave}
           >
-            Save Changes
+            Simpan Perubahan
           </button>
         </>
       }
     >
       <div className="row g-3">
-        <Field label="Employee Number" required col="col-md-6">
+        <Field label="Nomor Karyawan" required col="col-md-6">
           <input
             type="text"
             className="form-control"
@@ -106,7 +111,7 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
           />
         </Field>
 
-        <Field label="Full Name" required col="col-md-6">
+        <Field label="Nama Lengkap" required col="col-md-6">
           <input
             type="text"
             className="form-control"
@@ -115,7 +120,7 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
           />
         </Field>
 
-        <Field label="Position" required col="col-md-6">
+        <Field label="Jabatan" required col="col-md-6">
           <select
             className="form-select"
             value={form.position}
@@ -127,7 +132,7 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
           </select>
         </Field>
 
-        <Field label="Department" col="col-md-6">
+        <Field label="Departemen" col="col-md-6">
           <select
             className="form-select"
             value={form.department}
@@ -139,7 +144,7 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
           </select>
         </Field>
 
-        <Field label="Outlet / Placement" col="col-md-6">
+        <Field label="Outlet / Penempatan" col="col-md-6">
           <select
             className="form-select"
             value={form.outlet}
@@ -151,7 +156,7 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
           </select>
         </Field>
 
-        <Field label="Date of Birth" col="col-md-3">
+        <Field label="Tanggal Lahir" col="col-md-3">
           <input
             type="date"
             className="form-control"
@@ -160,7 +165,7 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
           />
         </Field>
 
-        <Field label="Gender" col="col-md-3">
+        <Field label="Jenis Kelamin" col="col-md-3">
           <select
             className="form-select"
             value={form.gender}
@@ -168,12 +173,12 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
               patch({ gender: event.target.value as EmployeeProfile["gender"] })
             }
           >
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Male">Laki-laki</option>
+            <option value="Female">Perempuan</option>
           </select>
         </Field>
 
-        <Field label="Handphone Number" required col="col-md-6">
+        <Field label="Nomor Handphone" required col="col-md-6">
           <input
             type="tel"
             className="form-control"
@@ -192,7 +197,36 @@ export function EmployeeEditModal({ open, employee, onClose, onSave }: Props) {
           />
         </Field>
 
-        <Field label="Address" col="col-12">
+        <Field label="Level Staf" col="col-md-6">
+          <select
+            className="form-select"
+            value={form.staffLevel}
+            onChange={(event) =>
+              patch({
+                staffLevel: event.target.value as EmployeeProfile["staffLevel"],
+              })
+            }
+          >
+            {STAFF_LEVELS.map((level) => (
+              <option key={level}>{level}</option>
+            ))}
+          </select>
+        </Field>
+
+        <Field label="Status Karyawan" col="col-md-6">
+          <select
+            className="form-select"
+            value={form.active ? "active" : "inactive"}
+            onChange={(event) =>
+              patch({ active: event.target.value === "active" })
+            }
+          >
+            <option value="active">Aktif</option>
+            <option value="inactive">Tidak Aktif</option>
+          </select>
+        </Field>
+
+        <Field label="Alamat" col="col-12">
           <textarea
             className="form-control"
             rows={3}

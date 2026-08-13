@@ -30,13 +30,13 @@ function TrainingTable({
         <thead>
           <tr>
             <th style={{ width: 60 }}>No</th>
-            <th>Test Code</th>
-            <th>Test Title</th>
-            <th>Training Date</th>
-            <th className="text-center">Required</th>
+            <th>Kode Tes</th>
+            <th>Judul Tes</th>
+            <th>Tanggal Pelatihan</th>
+            <th className="text-center">Wajib</th>
             <th>Pre-Test</th>
             <th>Post-Test</th>
-            <th>{history ? "Result" : "Status"}</th>
+            <th>{history ? "Hasil" : "Status"}</th>
             {onOpen ? <th style={{ width: 60 }}></th> : null}
           </tr>
         </thead>
@@ -64,7 +64,7 @@ function TrainingTable({
                   {item.trainingStart && item.trainingEnd ? (
                     `${item.trainingStart} — ${item.trainingEnd}`
                   ) : (
-                    <span className="empty-text">No date range</span>
+                    <span className="empty-text">Tanpa rentang tanggal</span>
                   )}
                 </td>
                 <td className="text-center">
@@ -75,7 +75,7 @@ function TrainingTable({
                         : "badge-status badge-archived"
                     }
                   >
-                    {item.required ? "Required" : "Optional"}
+                    {item.required ? "Wajib" : "Opsional"}
                   </span>
                 </td>
                 <td>
@@ -84,7 +84,7 @@ function TrainingTable({
                   </span>
                   {item.preTest.score !== null ? (
                     <span className="score-date d-block">
-                      Score {item.preTest.score}
+                      Skor {item.preTest.score}
                     </span>
                   ) : null}
                 </td>
@@ -94,7 +94,7 @@ function TrainingTable({
                   </span>
                   {item.postTest.score !== null ? (
                     <span className="score-date d-block">
-                      Score {item.postTest.score}
+                      Skor {item.postTest.score}
                     </span>
                   ) : null}
                 </td>
@@ -106,7 +106,7 @@ function TrainingTable({
                     <button
                       type="button"
                       className="icon-btn"
-                      aria-label={`Open ${item.title}`}
+                      aria-label={`Buka ${item.title}`}
                       onClick={(event) => {
                         event.stopPropagation();
                         onOpen(item.id);
@@ -146,57 +146,57 @@ function TrainingTable({
 
 export function UserTraining({ employee, onOpen }: Props) {
   const assigned = employee?.assigned ?? [];
-  const active = assigned.filter((item) => trainingState(item) === "Active");
-  const history = assigned.filter((item) => trainingState(item) !== "Active");
+  const active = assigned.filter((item) => trainingState(item) === "Aktif");
+  const history = assigned.filter((item) => trainingState(item) !== "Aktif");
 
   return (
     <>
       <div className="page-head">
         <div>
           <h1 className="page-title">Training</h1>
-          <p className="page-sub">Your assigned tests and training history</p>
+          <p className="page-sub">Tes yang ditugaskan kepada Anda dan riwayat pelatihan</p>
         </div>
       </div>
 
       <section className="panel mb-4">
         <div className="panel-head">
-          <h2 className="panel-title">Active Training</h2>
+          <h2 className="panel-title">Pelatihan Aktif</h2>
           <span className="text-secondary" style={{ fontSize: 13.5 }}>
-            Click a training to open it
+            Klik salah satu pelatihan untuk membukanya
           </span>
         </div>
         <TrainingTable
           rows={active}
           history={false}
           onOpen={onOpen}
-          emptyText="No active training. You are all caught up."
+          emptyText="Tidak ada pelatihan aktif. Semua sudah Anda selesaikan."
         />
         <div className="panel-foot">
-          <span className="text-secondary">{active.length} active training</span>
+          <span className="text-secondary">{active.length} pelatihan aktif</span>
         </div>
       </section>
 
       <section className="panel">
         <div className="panel-head">
-          <h2 className="panel-title">History Training</h2>
+          <h2 className="panel-title">Riwayat Pelatihan</h2>
           <span className="text-secondary" style={{ fontSize: 13.5 }}>
-            Completed and expired training
+            Pelatihan yang selesai dan kedaluwarsa
           </span>
         </div>
         <TrainingTable
           rows={history}
           history
-          emptyText="No training history yet."
+          emptyText="Belum ada riwayat pelatihan."
         />
         <div className="panel-foot">
           <span className="text-secondary">
             {
-              history.filter((item) => trainingState(item) === "Completed")
+              history.filter((item) => trainingState(item) === "Selesai")
                 .length
             }{" "}
-            completed &middot;{" "}
-            {history.filter((item) => trainingState(item) === "Expired").length}{" "}
-            expired
+            selesai &middot;{" "}
+            {history.filter((item) => trainingState(item) === "Kedaluwarsa").length}{" "}
+            kedaluwarsa
           </span>
         </div>
       </section>

@@ -1,4 +1,8 @@
-export type AttemptStatus = "Passed" | "Failed" | "In Progress" | "Not Started";
+export type AttemptStatus =
+  | "Lulus"
+  | "Tidak Lulus"
+  | "Sedang Dikerjakan"
+  | "Belum Dikerjakan";
 
 export type Attempt = {
   status: AttemptStatus;
@@ -20,6 +24,13 @@ export type AssignedTest = {
   postTest: Attempt;
 };
 
+export type StaffLevel =
+  | "Karyawan"
+  | "Senior"
+  | "Supervisor"
+  | "Manager"
+  | "General Manager";
+
 export type EmployeeRow = {
   id: string;
   nik: string;
@@ -36,11 +47,16 @@ export type EmployeeRow = {
   address: string;
   /** Latest performance review score, 0-100. */
   kpiScore: number;
+  /** Job level, used to look up the minimum KPI score in Assessment Master. */
+  staffLevel: StaffLevel;
+  /** Who reviews this employee. null when nobody is assigned. */
+  supervisorId: string | null;
+  active: boolean;
   assigned: AssignedTest[];
 };
 
 const notStarted: Attempt = {
-  status: "Not Started",
+  status: "Belum Dikerjakan",
   score: null,
   submittedAt: null,
 };
@@ -60,6 +76,9 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
     email: "rizky.ramadhan@example.com",
     address: "Jl. Kemang Raya No. 42, RT 03/RW 05, Bangka, Mampang Prapatan, Jakarta Selatan 12730",
     kpiScore: 82,
+    staffLevel: "Senior",
+    supervisorId: "e3",
+    active: true,
     assigned: [
       {
         id: "a1",
@@ -69,10 +88,10 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         category: "Operational",
         passingScore: 75,
         required: true,
-        trainingStart: "01 Aug 2026",
-        trainingEnd: "07 Aug 2026",
-        preTest: { status: "Passed", score: 68, submittedAt: "01 Aug 2026" },
-        postTest: { status: "Passed", score: 88, submittedAt: "07 Aug 2026" },
+        trainingStart: "01 Agu 2026",
+        trainingEnd: "07 Agu 2026",
+        preTest: { status: "Lulus", score: 68, submittedAt: "01 Agu 2026" },
+        postTest: { status: "Lulus", score: 88, submittedAt: "07 Agu 2026" },
       },
       {
         id: "a2",
@@ -82,10 +101,10 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         category: "Soft Skill",
         passingScore: 75,
         required: true,
-        trainingStart: "10 Aug 2026",
-        trainingEnd: "14 Aug 2026",
-        preTest: { status: "Passed", score: 72, submittedAt: "10 Aug 2026" },
-        postTest: { status: "In Progress", score: null, submittedAt: null },
+        trainingStart: "10 Agu 2026",
+        trainingEnd: "14 Agu 2026",
+        preTest: { status: "Lulus", score: 72, submittedAt: "10 Agu 2026" },
+        postTest: { status: "Sedang Dikerjakan", score: null, submittedAt: null },
       },
       {
         id: "a3",
@@ -110,8 +129,8 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         required: false,
         trainingStart: "01 Jul 2026",
         trainingEnd: "08 Jul 2026",
-        preTest: { status: "Passed", score: 70, submittedAt: "01 Jul 2026" },
-        postTest: { status: "Passed", score: 85, submittedAt: "08 Jul 2026" },
+        preTest: { status: "Lulus", score: 70, submittedAt: "01 Jul 2026" },
+        postTest: { status: "Lulus", score: 85, submittedAt: "08 Jul 2026" },
       },
       {
         id: "a10",
@@ -123,7 +142,7 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         required: true,
         trainingStart: "20 Jul 2026",
         trainingEnd: "26 Jul 2026",
-        preTest: { status: "Passed", score: 66, submittedAt: "21 Jul 2026" },
+        preTest: { status: "Lulus", score: 66, submittedAt: "21 Jul 2026" },
         postTest: notStarted,
       },
     ],
@@ -142,6 +161,9 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
     email: "siti.nurhaliza@example.com",
     address: "Jl. Senayan Dalam No. 8, RT 01/RW 02, Selong, Kebayoran Baru, Jakarta Selatan 12110",
     kpiScore: 68,
+    staffLevel: "Karyawan",
+    supervisorId: "e3",
+    active: true,
     assigned: [
       {
         id: "a4",
@@ -151,10 +173,10 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         category: "Operational",
         passingScore: 75,
         required: true,
-        trainingStart: "01 Aug 2026",
-        trainingEnd: "07 Aug 2026",
-        preTest: { status: "Failed", score: 54, submittedAt: "01 Aug 2026" },
-        postTest: { status: "Passed", score: 79, submittedAt: "07 Aug 2026" },
+        trainingStart: "01 Agu 2026",
+        trainingEnd: "07 Agu 2026",
+        preTest: { status: "Tidak Lulus", score: 54, submittedAt: "01 Agu 2026" },
+        postTest: { status: "Lulus", score: 79, submittedAt: "07 Agu 2026" },
       },
       {
         id: "a5",
@@ -164,9 +186,9 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         category: "Product",
         passingScore: 70,
         required: false,
-        trainingStart: "12 Aug 2026",
-        trainingEnd: "16 Aug 2026",
-        preTest: { status: "In Progress", score: null, submittedAt: null },
+        trainingStart: "12 Agu 2026",
+        trainingEnd: "16 Agu 2026",
+        preTest: { status: "Sedang Dikerjakan", score: null, submittedAt: null },
         postTest: notStarted,
       },
     ],
@@ -185,6 +207,9 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
     email: "bagus.prakoso@example.com",
     address: "Jl. Bintaro Utama Sektor 3A No. 15, Pondok Karya, Pondok Aren, Tangerang Selatan 15225",
     kpiScore: 91,
+    staffLevel: "Supervisor",
+    supervisorId: "e6",
+    active: true,
     assigned: [
       {
         id: "a6",
@@ -194,10 +219,10 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         category: "Leadership",
         passingScore: 75,
         required: true,
-        trainingStart: "05 Aug 2026",
-        trainingEnd: "12 Aug 2026",
-        preTest: { status: "Passed", score: 76, submittedAt: "05 Aug 2026" },
-        postTest: { status: "Passed", score: 92, submittedAt: "12 Aug 2026" },
+        trainingStart: "05 Agu 2026",
+        trainingEnd: "12 Agu 2026",
+        preTest: { status: "Lulus", score: 76, submittedAt: "05 Agu 2026" },
+        postTest: { status: "Lulus", score: 92, submittedAt: "12 Agu 2026" },
       },
     ],
   },
@@ -215,6 +240,9 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
     email: "dewi.anggraini@example.com",
     address: "Jl. Bangka II No. 27, RT 06/RW 04, Pela Mampang, Jakarta Selatan 12720",
     kpiScore: 74,
+    staffLevel: "Karyawan",
+    supervisorId: "e3",
+    active: true,
     assigned: [
       {
         id: "a7",
@@ -224,9 +252,9 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         category: "Soft Skill",
         passingScore: 75,
         required: true,
-        trainingStart: "10 Aug 2026",
-        trainingEnd: "14 Aug 2026",
-        preTest: { status: "Passed", score: 81, submittedAt: "10 Aug 2026" },
+        trainingStart: "10 Agu 2026",
+        trainingEnd: "14 Agu 2026",
+        preTest: { status: "Lulus", score: 81, submittedAt: "10 Agu 2026" },
         postTest: notStarted,
       },
     ],
@@ -245,6 +273,9 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
     email: "andi.kurniawan@example.com",
     address: "Jl. Raya Cakung Cilincing KM 3, Rorotan, Cilincing, Jakarta Utara 14140",
     kpiScore: 55,
+    staffLevel: "Karyawan",
+    supervisorId: "e3",
+    active: false,
     assigned: [],
   },
   {
@@ -261,6 +292,9 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
     email: "maria.tanjung@example.com",
     address: "Jl. Tebet Barat Dalam Raya No. 61, RT 02/RW 07, Tebet, Jakarta Selatan 12810",
     kpiScore: 88,
+    staffLevel: "Manager",
+    supervisorId: null,
+    active: true,
     assigned: [
       {
         id: "a8",
@@ -270,13 +304,21 @@ export const EMPLOYEE_LIST: EmployeeRow[] = [
         category: "Compliance",
         passingScore: 80,
         required: true,
-        trainingStart: "03 Aug 2026",
-        trainingEnd: "09 Aug 2026",
-        preTest: { status: "Failed", score: 61, submittedAt: "03 Aug 2026" },
-        postTest: { status: "Failed", score: 74, submittedAt: "09 Aug 2026" },
+        trainingStart: "03 Agu 2026",
+        trainingEnd: "09 Agu 2026",
+        preTest: { status: "Tidak Lulus", score: 61, submittedAt: "03 Agu 2026" },
+        postTest: { status: "Tidak Lulus", score: 74, submittedAt: "09 Agu 2026" },
       },
     ],
   },
+];
+
+export const STAFF_LEVELS: StaffLevel[] = [
+  "Karyawan",
+  "Senior",
+  "Supervisor",
+  "Manager",
+  "General Manager",
 ];
 
 export const POSITIONS = [
@@ -310,14 +352,14 @@ const MONTHS = [
   "Feb",
   "Mar",
   "Apr",
-  "May",
+  "Mei",
   "Jun",
   "Jul",
-  "Aug",
+  "Agu",
   "Sep",
-  "Oct",
+  "Okt",
   "Nov",
-  "Dec",
+  "Des",
 ];
 
 /** "1996-04-18" -> "18 Apr 1996". Returns "—" for an empty value. */
@@ -343,49 +385,52 @@ export function ageFromIso(iso: string) {
 }
 
 export function attemptStatusClass(status: AttemptStatus) {
-  if (status === "Passed") return "badge-status badge-published";
-  if (status === "Failed") return "badge-status badge-failed";
-  if (status === "In Progress") return "badge-status badge-draft";
+  if (status === "Lulus") return "badge-status badge-published";
+  if (status === "Tidak Lulus") return "badge-status badge-failed";
+  if (status === "Sedang Dikerjakan") return "badge-status badge-draft";
   return "badge-status badge-archived";
 }
 
 export function completionOf(employee: EmployeeRow) {
   const total = employee.assigned.length;
   const done = employee.assigned.filter(
-    (item) => item.postTest.status === "Passed" || item.postTest.status === "Failed"
+    (item) => item.postTest.status === "Lulus" || item.postTest.status === "Tidak Lulus"
   ).length;
   return { done, total };
 }
 
-export type KpiBand = "Green" | "Yellow" | "Red";
+export type KpiBand = "Hijau" | "Kuning" | "Merah";
 
 export const KPI_BANDS: { band: KpiBand; label: string; range: string }[] = [
-  { band: "Green", label: "Green — On target", range: "80 and above" },
-  { band: "Yellow", label: "Yellow — Needs attention", range: "65 to 79" },
-  { band: "Red", label: "Red — Below standard", range: "under 65" },
+  { band: "Hijau", label: "Hijau — Sesuai target", range: "80 ke atas" },
+  { band: "Kuning", label: "Kuning — Perlu perhatian", range: "65 sampai 79" },
+  { band: "Merah", label: "Merah — Di bawah standar", range: "di bawah 65" },
 ];
 
 export function kpiBand(score: number): KpiBand {
-  if (score >= 80) return "Green";
-  if (score >= 65) return "Yellow";
-  return "Red";
+  if (score >= 80) return "Hijau";
+  if (score >= 65) return "Kuning";
+  return "Merah";
 }
 
 export function kpiBandClass(band: KpiBand) {
-  if (band === "Green") return "badge-status badge-published";
-  if (band === "Yellow") return "badge-status badge-draft";
+  if (band === "Hijau") return "badge-status badge-published";
+  if (band === "Kuning") return "badge-status badge-draft";
   return "badge-status badge-failed";
 }
 
 /** The employee whose account is signed in when the app runs as "user". */
 export const CURRENT_EMPLOYEE_ID = "e1";
 
+/** The employee behind the supervisor account — supervisors are staff too. */
+export const CURRENT_SUPERVISOR_ID = "e3";
+
 const MONTH_INDEX: Record<string, number> = {
-  Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
-  Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
+  Jan: 0, Feb: 1, Mar: 2, Apr: 3, Mei: 4, Jun: 5,
+  Jul: 6, Agu: 7, Sep: 8, Okt: 9, Nov: 10, Des: 11,
 };
 
-/** Parses the display format used across the mock data ("07 Aug 2026"). */
+/** Parses the display format used across the mock data ("07 Agu 2026"). */
 export function parseDisplayDate(value: string) {
   const match = /^(\d{2}) ([A-Za-z]{3}) (\d{4})$/.exec(value);
   if (!match) return null;
@@ -394,7 +439,7 @@ export function parseDisplayDate(value: string) {
   return new Date(Number(match[3]), month, Number(match[1]));
 }
 
-export type TrainingState = "Active" | "Completed" | "Expired";
+export type TrainingState = "Aktif" | "Selesai" | "Kedaluwarsa";
 
 /**
  * A training is completed once the post-test has been submitted, expired when
@@ -402,15 +447,49 @@ export type TrainingState = "Active" | "Completed" | "Expired";
  */
 export function trainingState(item: AssignedTest, today = new Date()): TrainingState {
   const finished =
-    item.postTest.status === "Passed" || item.postTest.status === "Failed";
-  if (finished) return "Completed";
+    item.postTest.status === "Lulus" || item.postTest.status === "Tidak Lulus";
+  if (finished) return "Selesai";
   const end = item.trainingEnd ? parseDisplayDate(item.trainingEnd) : null;
-  if (end && end.getTime() < today.getTime()) return "Expired";
-  return "Active";
+  if (end && end.getTime() < today.getTime()) return "Kedaluwarsa";
+  return "Aktif";
 }
 
 export function trainingStateClass(state: TrainingState) {
-  if (state === "Completed") return "badge-status badge-published";
-  if (state === "Expired") return "badge-status badge-failed";
+  if (state === "Selesai") return "badge-status badge-published";
+  if (state === "Kedaluwarsa") return "badge-status badge-failed";
   return "badge-status badge-draft";
+}
+
+/** Training level, earned from the number of completed trainings. */
+export const TRAINING_LEVELS = [
+  { level: 1, name: "Pemula", min: 0 },
+  { level: 2, name: "Terampil", min: 2 },
+  { level: 3, name: "Mahir", min: 5 },
+  { level: 4, name: "Ahli", min: 9 },
+  { level: 5, name: "Master", min: 14 },
+];
+
+export function finishedTrainings(employee: EmployeeRow) {
+  return employee.assigned.filter(
+    (item) => trainingState(item) === "Selesai"
+  ).length;
+}
+
+export function levelOf(finished: number) {
+  let current = TRAINING_LEVELS[0];
+  for (const level of TRAINING_LEVELS) {
+    if (finished >= level.min) current = level;
+  }
+  const next =
+    TRAINING_LEVELS.find((level) => level.min > finished) ?? null;
+  return {
+    ...current,
+    next,
+    remaining: next ? next.min - finished : 0,
+  };
+}
+
+/** Employees reviewed by the given supervisor. */
+export function teamOf(supervisorId: string, employees: EmployeeRow[]) {
+  return employees.filter((employee) => employee.supervisorId === supervisorId);
 }
