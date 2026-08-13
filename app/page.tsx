@@ -74,7 +74,7 @@ export default function Home() {
         submittedAt: "13 Agu 2026",
         status: "Menunggu",
         exitInterviewDate: null,
-        onboardingPlanDate: null,
+        handOverPlanDate: null,
       },
       ...current,
     ]);
@@ -88,7 +88,7 @@ export default function Home() {
               ...letter,
               status: "Disetujui",
               exitInterviewDate: payload.exitInterviewDate,
-              onboardingPlanDate: payload.onboardingPlanDate,
+              handOverPlanDate: payload.handOverPlanDate,
             }
           : letter
       )

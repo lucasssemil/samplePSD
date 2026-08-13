@@ -22,7 +22,7 @@ export type ResignLetter = {
   status: ResignStatus;
   /** Filled in by the admin when the letter is approved. */
   exitInterviewDate: string | null;
-  onboardingPlanDate: string | null;
+  handOverPlanDate: string | null;
 };
 
 export const RESIGN_LETTERS: ResignLetter[] = [
@@ -36,7 +36,7 @@ export const RESIGN_LETTERS: ResignLetter[] = [
     submittedAt: "01 Agu 2026",
     status: "Menunggu",
     exitInterviewDate: null,
-    onboardingPlanDate: null,
+    handOverPlanDate: null,
   },
   {
     id: "r2",
@@ -48,7 +48,7 @@ export const RESIGN_LETTERS: ResignLetter[] = [
     submittedAt: "28 Jul 2026",
     status: "Disetujui",
     exitInterviewDate: "2026-08-25",
-    onboardingPlanDate: "2026-08-18",
+    handOverPlanDate: "2026-08-18",
   },
   {
     id: "r3",
@@ -60,7 +60,7 @@ export const RESIGN_LETTERS: ResignLetter[] = [
     submittedAt: "05 Agu 2026",
     status: "Menunggu",
     exitInterviewDate: null,
-    onboardingPlanDate: null,
+    handOverPlanDate: null,
   },
   {
     id: "r4",
@@ -72,7 +72,7 @@ export const RESIGN_LETTERS: ResignLetter[] = [
     submittedAt: "10 Agu 2026",
     status: "Menunggu",
     exitInterviewDate: null,
-    onboardingPlanDate: null,
+    handOverPlanDate: null,
   },
 ];
 

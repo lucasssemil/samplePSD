@@ -12,7 +12,7 @@ import {
 
 export type ApprovalPayload = {
   exitInterviewDate: string;
-  onboardingPlanDate: string;
+  handOverPlanDate: string;
 };
 
 type Props = {
@@ -31,22 +31,22 @@ export function ApproveResignModal({
   onApprove,
 }: Props) {
   const [exitInterviewDate, setExitInterviewDate] = useState("");
-  const [onboardingPlanDate, setOnboardingPlanDate] = useState("");
+  const [handOverPlanDate, setHandOverPlanDate] = useState("");
 
   // Load the stored dates when an already approved letter is reopened.
   useEffect(() => {
     setExitInterviewDate(letter?.exitInterviewDate ?? "");
-    setOnboardingPlanDate(letter?.onboardingPlanDate ?? "");
+    setHandOverPlanDate(letter?.handOverPlanDate ?? "");
   }, [letter]);
 
   if (!open || !letter) return null;
 
-  const canApprove = exitInterviewDate !== "" && onboardingPlanDate !== "";
+  const canApprove = exitInterviewDate !== "" && handOverPlanDate !== "";
   const approved = letter.status === "Disetujui";
 
   function approve() {
     if (!canApprove || !letter) return;
-    onApprove(letter.id, { exitInterviewDate, onboardingPlanDate });
+    onApprove(letter.id, { exitInterviewDate, handOverPlanDate });
     onClose();
   }
 
@@ -108,16 +108,16 @@ export function ApproveResignModal({
         </Field>
 
         <Field
-          label="Tanggal Rencana Onboarding"
+          label="Tanggal Rencana Hand Over"
           required
           col="col-md-6"
-          hint="Kapan onboarding pengganti dimulai."
+          hint="Kapan hand over ke pengganti dimulai."
         >
           <input
             type="date"
             className="form-control"
-            value={onboardingPlanDate}
-            onChange={(event) => setOnboardingPlanDate(event.target.value)}
+            value={handOverPlanDate}
+            onChange={(event) => setHandOverPlanDate(event.target.value)}
           />
         </Field>
 

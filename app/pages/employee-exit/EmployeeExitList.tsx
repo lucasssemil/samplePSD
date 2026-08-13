@@ -48,7 +48,7 @@ export function EmployeeExitList({ employees, letters, onApprove }: Props) {
         <div>
           <h1 className="page-title">Employee Exit</h1>
           <p className="page-sub">
-            Surat resign, exit interview, dan rencana onboarding
+            Surat resign, exit interview, dan rencana hand over
           </p>
         </div>
       </div>
@@ -127,7 +127,7 @@ export function EmployeeExitList({ employees, letters, onApprove }: Props) {
                 <th>Dikirim</th>
                 <th>Status</th>
                 <th>Exit Interview</th>
-                <th>Rencana Onboarding</th>
+                <th>Rencana Hand Over</th>
                 <th className="text-center" style={{ width: 120 }}>
                   Aksi
                 </th>
@@ -171,8 +171,8 @@ export function EmployeeExitList({ employees, letters, onApprove }: Props) {
                       )}
                     </td>
                     <td className="text-secondary">
-                      {letter.onboardingPlanDate ? (
-                        formatIsoDate(letter.onboardingPlanDate)
+                      {letter.handOverPlanDate ? (
+                        formatIsoDate(letter.handOverPlanDate)
                       ) : (
                         <span className="empty-text">Belum diatur</span>
                       )}
