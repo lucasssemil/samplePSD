@@ -1,6 +1,6 @@
 "use client";
 
-import { TEST_LIST, type TestStatus } from "../lib/tests";
+import { TEST_LIST, totalQuestions, type TestStatus } from "../lib/tests";
 
 type Props = {
   onCreate: () => void;
@@ -68,6 +68,7 @@ export function LmsTestList({ onCreate }: Props) {
                 <th>Test Title</th>
                 <th>Category</th>
                 <th className="text-center">Questions</th>
+                <th className="text-center">Video</th>
                 <th className="text-center">Duration</th>
                 <th>Status</th>
                 <th>Created</th>
@@ -83,7 +84,27 @@ export function LmsTestList({ onCreate }: Props) {
                   <td className="fw-semibold">{row.code}</td>
                   <td>{row.title}</td>
                   <td>{row.category}</td>
-                  <td className="text-center">{row.questions}</td>
+                  <td className="text-center">
+                    {totalQuestions(row)}
+                    <span className="d-block text-secondary" style={{ fontSize: 12 }}>
+                      {row.preQuestions} pre / {row.postQuestions} post
+                    </span>
+                  </td>
+                  <td className="text-center">
+                    <a
+                      className="video-link"
+                      href={row.videoLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      title={row.videoLink}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <rect x="2.5" y="5" width="19" height="14" rx="3" />
+                        <path d="m10 9.5 5 2.5-5 2.5v-5Z" />
+                      </svg>
+                      Video
+                    </a>
+                  </td>
                   <td className="text-center">{row.duration} min</td>
                   <td>
                     <span className={statusClass(row.status)}>{row.status}</span>

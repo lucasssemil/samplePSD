@@ -1,0 +1,158 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { CheckField, Field, TestSelect } from "./FormField";
+import { Modal } from "./Modal";
+import { TEST_LIST } from "../lib/tests";
+
+export type AssignPayload = {
+  testId: string;
+  useDateRange: boolean;
+  startDate: string;
+  endDate: string;
+  required: boolean;
+};
+
+type Props = {
+  open: boolean;
+  employeeName?: string;
+  onClose: () => void;
+  onSubmit?: (payload: AssignPayload) => void;
+};
+
+const EMPTY: AssignPayload = {
+  testId: "",
+  useDateRange: false,
+  startDate: "",
+  endDate: "",
+  required: false,
+};
+
+export function AssignTestModal({
+  open,
+  employeeName,
+  onClose,
+  onSubmit,
+}: Props) {
+  const [form, setForm] = useState<AssignPayload>(EMPTY);
+
+  // Reset the form each time the dialog opens so it never carries over an
+  // earlier employee's selection.
+  useEffect(() => {
+    if (open) setForm(EMPTY);
+  }, [open]);
+
+  function patch(next: Partial<AssignPayload>) {
+    setForm((current) => ({ ...current, ...next }));
+  }
+
+  const dateRangeInvalid =
+    form.useDateRange &&
+    form.startDate !== "" &&
+    form.endDate !== "" &&
+    form.endDate < form.startDate;
+
+  const canSubmit =
+    form.testId !== "" &&
+    !dateRangeInvalid &&
+    (!form.useDateRange || (form.startDate !== "" && form.endDate !== ""));
+
+  function submit() {
+    if (!canSubmit) return;
+    onSubmit?.(form);
+    onClose();
+  }
+
+  return (
+    <Modal
+      open={open}
+      title="Assign Test"
+      subtitle={
+        employeeName
+          ? `Assign a test to ${employeeName}`
+          : "Assign a test to the selected employee"
+      }
+      onClose={onClose}
+      footer={
+        <>
+          <button type="button" className="btn-ghost" onClick={onClose}>
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="btn-brand"
+            onClick={submit}
+            disabled={!canSubmit}
+          >
+            Assign Test
+          </button>
+        </>
+      }
+    >
+      <div className="row g-3">
+        <Field label="Test" required>
+          <TestSelect
+            value={form.testId}
+            onChange={(testId) => patch({ testId })}
+            options={TEST_LIST}
+          />
+        </Field>
+
+        <div className="col-12">
+          <CheckField
+            id="assign-date-range"
+            label="Set training date range"
+            hint="Leave unchecked to let the employee take the test at any time."
+            checked={form.useDateRange}
+            onChange={(useDateRange) =>
+              patch(
+                useDateRange
+                  ? { useDateRange }
+                  : { useDateRange, startDate: "", endDate: "" }
+              )
+            }
+          />
+        </div>
+
+        <Field label="Training Start" col="col-md-6">
+          <input
+            type="date"
+            className="form-control"
+            value={form.startDate}
+            disabled={!form.useDateRange}
+            onChange={(event) => patch({ startDate: event.target.value })}
+          />
+        </Field>
+
+        <Field label="Training End" col="col-md-6">
+          <input
+            type="date"
+            className="form-control"
+            value={form.endDate}
+            disabled={!form.useDateRange}
+            min={form.startDate || undefined}
+            onChange={(event) => patch({ endDate: event.target.value })}
+          />
+        </Field>
+
+        {dateRangeInvalid ? (
+          <div className="col-12">
+            <p className="field-error mb-0">
+              Training end date must be on or after the start date.
+            </p>
+          </div>
+        ) : null}
+
+        <div className="col-12">
+          <CheckField
+            id="assign-required"
+            label="Mark this training as required"
+            hint="Required trainings are counted in the employee compliance report."
+            checked={form.required}
+            onChange={(required) => patch({ required })}
+          />
+        </div>
+      </div>
+    </Modal>
+  );
+}
